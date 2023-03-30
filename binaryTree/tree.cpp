@@ -1,6 +1,4 @@
-//
-// Created by marvin on 3/30/23.
-//
+// Created: 3/30/23.
 
 #include <iostream>
 #include "tree.h"

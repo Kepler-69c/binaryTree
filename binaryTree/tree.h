@@ -1,10 +1,7 @@
-// Created by marvin on 3/30/23.
+// Created: 3/30/23.
 
 #ifndef BINARYTREE_TREE_H
 #define BINARYTREE_TREE_H
-
-
-#pragma once
 
 #include <iostream>
 
@@ -12,11 +9,11 @@ namespace tree {
 
     struct node {
     public:
-        int data;
+        int data{};
         node* left;
         node* right;
         node* parent;
-        node() : left(NULL), right(NULL), parent(NULL) {} // default constructor needed for "addRoot" function
+        node() : left(nullptr), right(nullptr), parent(nullptr) {} // default constructor needed for "addRoot" function
     };
 
     class BinaryTree {
@@ -25,13 +22,13 @@ namespace tree {
         private:
             node* v;
         public:
-            Position(node*_v = NULL) : v(_v) {}
+            Position(node*_v = nullptr) : v(_v) {}
             int& operator*() { return v->data; }
             Position left() const { return v->left; }
             Position right() const { return v->right; }
             Position parent() const { return v->parent; }
-            bool isRoot() const { return v->parent == NULL; }
-            bool isExternal() const {return v->left == NULL && v->right == NULL;}
+            bool isRoot() const { return v->parent == nullptr; }
+            bool isExternal() const {return v->left == nullptr && v->right == nullptr;}
             friend class BinaryTree;
         };
         typedef std::initializer_list<Position>PositionList;
