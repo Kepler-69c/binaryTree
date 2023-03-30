@@ -1,6 +1,11 @@
 #include <iostream>
+#include "binaryTree/tree.h"
+
+using namespace std;
+using namespace tree;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    BinaryTree bT;
+    cout << bT.isEmpty() << endl;
     return 0;
 }
