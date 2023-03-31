@@ -13,7 +13,7 @@ namespace tree {
         node* left;
         node* right;
         node* parent;
-        node() : left(nullptr), right(nullptr), parent(nullptr) {} // default constructor needed for "addRoot" function
+        node() : left(NULL), right(NULL), parent(NULL) {} // default constructor needed for "addRoot" function
     };
 
     class BinaryTree {
@@ -22,11 +22,12 @@ namespace tree {
         private:
             node* v;
         public:
-            Position(node*_v = nullptr) : v(_v) {}
+            Position(node*_v = nullptr) : v(_v) {  }
             int& operator*() { return v->data; }
-            Position left() const { return v->left; }
-            Position right() const { return v->right; }
-            Position parent() const { return v->parent; }
+            Position left() { return v->left; }
+            Position right() { return v->right; }
+            Position parent() { return v->parent; }
+//            Position own() {return  ;}
             bool isRoot() const { return v->parent == nullptr; }
             bool isExternal() const {return v->left == nullptr && v->right == nullptr;}
             friend class BinaryTree;
