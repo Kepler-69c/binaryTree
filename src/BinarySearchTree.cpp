@@ -1,6 +1,8 @@
 // Created on 4/6/23.
 
 #include <iostream>
+#include <random>
+#include <functional>
 #include <stack>
 #include "BinarySearchTree.h"
 
@@ -49,5 +51,31 @@ void BST::insert(int d) {
     this->n++;
 }
 
+void BST::random(int nodes, int min, int max) {
+    random_device rd;
+    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
+    uniform_int_distribution<int> dis(min, max);
 
+    for (int i = 0; i < nodes; i++)
+        this->insert(dis(gen));
+
+}
+
+void BST::printTree() const {
+    cout << "In-order traversal: ";
+    stack<node*> s;
+    node* v = _Root;
+    while (!s.empty() || v != nullptr) {
+        if (v != nullptr) {
+            s.push(v);
+            v = v->left;
+        }
+        else {
+            v = s.top();
+            s.pop();
+            cout << v->data << " ";
+            v = v->right;
+        }
+    }
+    cout << endl;
 }

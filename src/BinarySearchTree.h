@@ -39,6 +39,7 @@ namespace BinarySearchTree {
         PositionList positions() const;
         void expandExternal(const Position &p);
         void insert(int d);
+        void random(int nodes, int min, int max);
         void printTree() const;
         Position removeAboveExternal(const Position& p);
     protected:
