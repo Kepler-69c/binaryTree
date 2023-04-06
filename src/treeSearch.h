@@ -4,7 +4,7 @@
 #define BINARYTREE_TREESEARCH_H
 
 #include "iostream"
-#include "../binaryTree/tree.h"
+#include "tree.h"
 
 using namespace std;
 using namespace tree;

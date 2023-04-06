@@ -2,7 +2,7 @@
 
 #include "iostream"
 #include "treeSearch.h"
-#include "../binaryTree/tree.h"
+#include "tree.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ void search::DFS(BinaryTree::Position pos) {
     if (!pos.isExternal()) {
         cout << *pos << " "; // Visit the current node
         // Recursively visit left and right subtrees
-        DFS(pos.left());
-        DFS(pos.right());
+        search::DFS(pos.left());
+        search::DFS(pos.right());
     }
 }
