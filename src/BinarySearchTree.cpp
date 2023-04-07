@@ -10,19 +10,22 @@ using namespace BinarySearchTree;
 using namespace std;
 
 BST::BST(int d) {
-    _Root = new node(d);//nullptr;
-    n = 0;
+    _Root = nullptr;
+    addRoot(d);
 }
+
+void BST::addRoot(int d) { _Root = new node(d); n = 1;}
+
 int BST::size() const {return n;}
 bool BST::isEmpty() const {return size() == 0;}
 
 BST::Position BST::root() const { return Position(_Root);}
 
-void BST::expandExternal(const Position &p) {
+void BST::expandExternal(const Position &p, int left, int right) {
     node* v = p.v;
-    v->left = new node(NULL);
+    v->left = new node(left);
     v->left->parent = v;
-    v->right = new node(NULL);
+    v->right = new node(right);
     v->right->parent = v;
     n += 2;
 }
