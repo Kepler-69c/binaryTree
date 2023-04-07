@@ -55,12 +55,6 @@ build CMakeFiles/binaryTree.dir/main.cpp.o: CXX_COMPILER__binaryTree_Debug /home
   OBJECT_DIR = CMakeFiles/binaryTree.dir
   OBJECT_FILE_DIR = CMakeFiles/binaryTree.dir
 
-build CMakeFiles/binaryTree.dir/src/tree.cpp.o: CXX_COMPILER__binaryTree_Debug /home/marvin/CLionProjects/binaryTree/src/tree.cpp || cmake_object_order_depends_target_binaryTree
-  DEP_FILE = CMakeFiles/binaryTree.dir/src/tree.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  OBJECT_DIR = CMakeFiles/binaryTree.dir
-  OBJECT_FILE_DIR = CMakeFiles/binaryTree.dir/src
-
 build CMakeFiles/binaryTree.dir/src/treeSearch.cpp.o: CXX_COMPILER__binaryTree_Debug /home/marvin/CLionProjects/binaryTree/src/treeSearch.cpp || cmake_object_order_depends_target_binaryTree
   DEP_FILE = CMakeFiles/binaryTree.dir/src/treeSearch.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
@@ -81,7 +75,7 @@ build CMakeFiles/binaryTree.dir/src/BinarySearchTree.cpp.o: CXX_COMPILER__binary
 #############################################
 # Link the executable binaryTree
 
-build binaryTree: CXX_EXECUTABLE_LINKER__binaryTree_Debug CMakeFiles/binaryTree.dir/main.cpp.o CMakeFiles/binaryTree.dir/src/tree.cpp.o CMakeFiles/binaryTree.dir/src/treeSearch.cpp.o CMakeFiles/binaryTree.dir/src/BinarySearchTree.cpp.o
+build binaryTree: CXX_EXECUTABLE_LINKER__binaryTree_Debug CMakeFiles/binaryTree.dir/main.cpp.o CMakeFiles/binaryTree.dir/src/treeSearch.cpp.o CMakeFiles/binaryTree.dir/src/BinarySearchTree.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/binaryTree.dir
   POST_BUILD = :

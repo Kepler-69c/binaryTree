@@ -4,14 +4,16 @@
 #define BINARYTREE_TREESEARCH_H
 
 #include "iostream"
-#include "tree.h"
+#include "BinarySearchTree.h"
 
 using namespace std;
-using namespace tree;
+using namespace BinarySearchTree;
 
 // various tree search algorithms
 namespace search {
-    void DFS(BinaryTree::Position pos);
+    void DFS(node* root);
+    void BFS(node* root);
+    void printTree(node* root);
 }
 
 
