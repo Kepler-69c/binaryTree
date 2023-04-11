@@ -5,14 +5,12 @@ using namespace std;
 using namespace BinarySearchTree;
 
 int main() {
-    int n = 10;
+    int n = 1000;
     BST tree(n);
     node* root_node = tree.root().v;
 
     tree.random(n, 1, n*2);
-    tree.printTree();
-
-    search::printTree(root_node);
+//    search::printTree(root_node);
 
     clock_t time0 = clock();
     // depth-first search

@@ -63,22 +63,3 @@ void BST::random(int nodes, int min, int max) {
         this->insert(dis(gen));
 
 }
-
-void BST::printTree() const {
-    cout << "In-order traversal: ";
-    stack<node*> s;
-    node* v = _Root;
-    while (!s.empty() || v != nullptr) {
-        if (v != nullptr) {
-            s.push(v);
-            v = v->left;
-        }
-        else {
-            v = s.top();
-            s.pop();
-            cout << v->data << " ";
-            v = v->right;
-        }
-    }
-    cout << endl;
-}
