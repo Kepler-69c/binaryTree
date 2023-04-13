@@ -1,0 +1,67 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[total={148mm,230mm}]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{lmodern}
+\usepackage[english,ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{apacite}
+
+\title{Vergleich der Komplexität von \break Tree-Search-Algorithmen}
+\author{}
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagebreak
+\selectlanguage{english}
+\begin{abstract}
+In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-Algorithmen untersucht. Es werden verschiedene Algorithmen wie die Tiefensuche, Breitensuche und andere heuristische Suchalgorithmen auf binären Suchbäumen getestet. Dabei wird die Anzahl der durchsuchten Knoten und die benötigte Zeit gemessen, um die Effizienz der Algorithmen zu vergleichen. Das Ziel ist es, die Komplexität der Suchalgorithmen zu berechnen, um diese dadurch zu vergleichen.
+\end{abstract}
+\selectlanguage{ngerman}
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\section{Einleitung}
+\cite{c2_algorithms}
+\section{Theorie}
+\subsection{Suchbaum}
+Suchbäume sind Datenstrukturen aus der Graphentheorie. Der Begriff "Suchbaum" bezieht sich auf die Tatsache, dass die Datenstruktur als Baum organisiert ist. Ein Baum besteht aus einer Wurzel, die den obersten Knoten (engl. nodes) darstellt, und einer Anzahl von Zweigen oder Kanten, die von der Wurzel zu den Blättern führen, die die Endpunkte des Baums darstellen. Jeder Knoten im Baum repräsentiert eine Entscheidung oder einen Zustand, und jeder Zweig repräsentiert eine Aktion, die von diesem Zustand ausgeführt werden kann.
+
+Ein Baum ist also ein Zusammenhängender Graph, der keine geschlossenen Pfade enthält\cite{graphs}, d.h. sich nur in eine Richtung von der Wurzel ausbreitet.
+
+\subsubsection{binärer Suchbaum}
+Ein binärer Suchbaum sind eine Spezielle Art von Suchbaum, bei der jeder Knoten höchstens zwei Kindknoten (engl. child nodes) haben kann. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zum normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, das jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum.
+%TODO: letzten Satz besser formulieren / restliche Theorie ist im Plural geschrieben, hier auch ändern?
+
+Der Vorteil dieser speziellen Anordnung ist, dass man schnell einen Knoten im Baum finden kann. Auch ist das Einfügen und Löschen von Knoten aus dem Baum einfacher.
+
+\subsection{Tree-Search Algorithmus}
+Tree-Search-Algorithmen sind eine Art von Algorithmen, die zur Lösung von Suchproblemen verwendet werden. Sie sind nützlich, wenn man aus einer Vielzahl von möglichen Optionen den passenden finden muss.
+%TODO: passenden?
+
+Tree-Search-Algorithmen arbeiten mit Suchbäumen, bei denen die verschiedenen Optionen als Knoten, die über Kanten dargestellt sind. Die Suche nach der Lösung des Problems besteht darin, durch die Baumstruktur zu navigieren und den Pfad finden, der von der Wurzel (engl. root) bis zum Zielzustand führt.
+%TODO: Zustand oder Option?
+
+\subsection{Komplexität von Tree-Search-Algorithmen}
+Das Durchsuchen eines Baumes nach einem gewünschten Zustand dauert nicht immer gleich lange. Es hängt vielmehr von einer Vielzahl verschiedener Faktoren ab, wie zum Beispiel der Größe und Tiefe des Suchbaums oder der Anzahl der Knoten. Eine Schätzung für die obere Schranke der Suchdauer und damit der Effizienz eines Tree-Search-Algorithmus gibt die Komplexität. 
+%TODO: verzweigungsfaktor auch nennen?
+
+Die Komplexität von Tree-Search-Algorithmen wird in der Sogenannten $O$-Notation ausgedrückt, die angibt, wie schnell die Laufzeit eines Suchalgorithmus mit der Grösse eines Baumes wächst. Eine Komplexität von $O(n)$ zum Beispiel bedeutet, dass die Laufzeit eines Algorithmus linear von der Knotenzahl $n$ abhängt.
+
+\section{Vergleich der Algorithmen}
+
+\section{Resultate}
+\section{Schlussfolgerung}
+\section{Reflexion}
+
+\pagebreak
+\bibliographystyle{apacite}
+\bibliography{bibfile}
+
+
+\end{document}
