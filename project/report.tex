@@ -3,10 +3,40 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{lmodern}
+\usepackage{listings}
 \usepackage[english,ngerman]{babel}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \usepackage{caption}
 \usepackage{apacite}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{cplusplus}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=cplusplus}
+
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}\hspace{.1em}}
 
 \title{Vergleich der Komplexität von \break Tree-Search-Algorithmen}
 \author{}
@@ -26,19 +56,26 @@ In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-
 \tableofcontents
 \pagebreak
 
-%TODO: aus der Sicht einer 3. Person schreiben!!
+%TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
+%TODO: alle begriffe, die oft vorkommen, gleich schreiben: z.B. Tree-Search Algorithmus (angang immer gross, verbunden)
 
 \section{Einleitung}
-\cite{c2_algorithms}
+Das Ziel dieses Projekts ist es, die Komplexitäten verschiedener Tree-Search-Algorithmen hinsichtlich der Größe und Tiefe des Baumes zu vergleichen. Dabei wird ein Programm in der Programmiersprache \CC erstellt, um die Berechnungen zu messen und zu überprüfen. 
+
+Tree-Search-Algorithmen sind in der künstlichen Intelligenz weit verbreitet und werden verwendet, um Entscheidungsprobleme zu lösen. Da verschiedene Algorithmen unterschiedliche Vorteile und Nachteile aufweisen, ist es wichtig, ihre Leistungsfähigkeit und Komplexität zu verstehen. Eine Art, dies zu messen ist die Einschätzung der Komplexität. Diese ist eine Abschätzung für das obere Limit der Laufzeit eines Tree-Search-Algorithmus bei einer Anzahl von $n$ und einer Tiefe von $d$ Knoten. In diesem Projekt wird die Komplexität von verschiedenen Tree-Search-Algorithmen miteinander verglichen, um eine bessere Einschätzung der Komplexität bei der Verwendung dieser Algorithmen zu ermöglichen.
+
+
 \section{Theorie}
 \subsection{Suchbaum}
-Suchbäume sind Datenstrukturen aus der Graphentheorie. Der Begriff "Suchbaum" bezieht sich darauf, dass die Datenstruktur baumartig organisiert ist. Ein Baum besteht aus einer Wurzel, die den obersten Knoten (engl. nodes) darstellt, und einer Anzahl von Zweigen oder Kanten, die von der Wurzel zu den Blättern führen, die die Endpunkte des Baums darstellen. Jeder Knoten im Baum repräsentiert eine Entscheidung oder einen Zustand, und jeder Zweig repräsentiert eine Aktion, die von diesem Zustand aus ausgeführt werden kann.
+Suchbäume sind Datenstrukturen aus der Graphentheorie. Der Begriff 'Suchbaum' bezieht sich darauf, dass die Datenstruktur baumartig organisiert ist. Ein Baum besteht aus einer Wurzel, die den obersten Knoten (engl. nodes) darstellt, und einer Anzahl von Zweigen oder Kanten, die von der Wurzel zu den Blättern führen, die die Endpunkte des Baums darstellen. Jeder Knoten im Baum repräsentiert eine Entscheidung oder einen Zustand, und jeder Zweig repräsentiert eine Aktion, die von diesem Zustand aus ausgeführt werden kann.
 
-Ein Baum ist also ein zusammenhängender Graph, der keine geschlossenen Pfade enthält\cite{graphs}, d.h. der sich nur in eine Richtung von der Wurzel aus erstreckt.
+%TODO: package für anführungszeichen hinzufügen
+
+Ein Baum ist also ein zusammenhängender Graph, der keine geschlossenen Pfade enthält \cite{graphs}, d.h. der sich nur in eine Richtung von der Wurzel aus erstreckt.
 
 \subsubsection{binärer Suchbaum}
-Ein binärer Suchbaum sind eine besondere Art von Suchbaum, bei dem jeder Knoten maximal zwei Kindknoten (engl. child nodes) haben kann. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zu einem normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, dass jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum ist.
-%TODO: letzten Satz besser formulieren / restliche Theorie ist im Plural geschrieben, hier auch ändern?
+Ein binärer Suchbaum sind eine besondere Art von Suchbaum, bei dem jeder Knoten maximal zwei Kindknoten (engl. child nodes) haben kann. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zu einem normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, dass jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum ist \cite{c2_algorithms}.
+%TODO: letzten Satz besser formulieren / restliche Theorie ist im Plural geschrieben, hier auch ändern? -> nach oder vor Punkt Zitieren?
 
 Der Vorteil dieser speziellen Anordnung ist, dass man schnell einen Knoten im Baum finden kann. Auch ist das Einfügen und Löschen von Knoten aus dem Baum einfacher.
 
@@ -56,7 +93,22 @@ Das Durchsuchen eines Baumes nach einem gewünschten Zustand dauert nicht immer 
 Die Komplexität von Tree-Search-Algorithmen wird in der sogenannten $O$-Notation ausgedrückt, die angibt, wie schnell die Laufzeit eines Suchalgorithmus mit der Grösse eines Baumes wächst. Eine Komplexität von $O(n)$ bedeutet beispielsweise, dass die Laufzeit eines Algorithmus linear von der Anzahl der Knoten $n$ abhängt.
 
 \section{Algorithmen im Vergleich}
+Untersucht wurden verschiedene Tree-Search-Algorithmen, unter anderem die Tiefensuche (engl. depth-first search, DFS), die Breitensuche (engl. breadth-first search, BFS) und die Monte-Carlo-Baumsuche (engl. Monte Carlo tree search, MCTS). Die Komplexität wurde zunächst für jeden Suchalgorithmus berechnet und anschliessend mit dem Programm in Bezug auf die Anzahl der Baumknoten und die Tiefe, in der das Ergebins lag, überprüft.
+%TODO: untersucht -> umformulieren, mathematisch berechnet -> umformulieren
 
+\subsection{Der Suchbaum}
+Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vorteil hat, leicht skalierbar zu sein. Auch ist die Tiefe des Baumes proportional zu der Anzahl der Knoten, was die Regelung der Baumtiefe erleichtert.
+%TODO: ist die automatische Tiefe ein Vorteil?
+
+Der Baum wurde wie folgt umgesetzt: 
+
+\lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinarySearchTree.h}
+
+\subsection{Breitensuche}
+
+\subsection{Tiefensuche}
+
+\subsection{Monte-Carlo Baumsuche}
 
 \section{Resultate}
 \section{Schlussfolgerung}
