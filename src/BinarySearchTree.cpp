@@ -64,6 +64,8 @@ void BST::random(int nodes, int min, int max) {
 
 }
 
+
+
 void BST::printTree() const {
     cout << "In-order traversal: ";
     stack<node*> s;
