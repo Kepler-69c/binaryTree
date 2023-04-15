@@ -24,5 +24,10 @@ int main() {
     cout << "Time taken: (BFS) " << double(time2 - time1) / CLOCKS_PER_SEC << " seconds" << endl;
 
 
+    cout << tree.getFromDepth(2) << endl;
+    cout << tree.getFromDepth(2) << endl;
+    cout << tree.getFromDepth(2) << endl;
+    cout << tree.getFromDepth(2) << endl;
+
     return 0;
 }
