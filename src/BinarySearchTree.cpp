@@ -62,6 +62,7 @@ void BST::insertByValue(int d) {
     this->n++;
 }
 
+// TODO: values can be inserted randomly multiple times -> fix
 void BST::insertRandom(int d) {
     node* v = _Root;
     node* p = nullptr;
@@ -69,11 +70,10 @@ void BST::insertRandom(int d) {
     while (v != nullptr) {
         p = v;
         // Randomly decide whether to go left or right
-        if (randomNum(0, 1) == 0) {
+        if (randomNum(0, 1) == 0)
             v = v->left;
-        } else {
+        else
             v = v->right;
-        }
     }
 
     // Insert the new node in the missing place
@@ -84,7 +84,6 @@ void BST::insertRandom(int d) {
         p->right = new node(d);
         p->right->parent = p;
     }
-
     n++;
 }
 
@@ -101,26 +100,25 @@ int BST::getFromDepth(int depth) {
             }
         }
         // Traverse to the next level of the tree
-        if (randomNum(0, 1) == 0 && v->left != nullptr) {
+        if (randomNum(0, 1) == 0 && v->left != nullptr)
             v = v->left;
-        } else if (v->right != nullptr) {
+        else if (v->right != nullptr)
             v = v->right;
-        } else {
-            // If neither left nor right child exists, backtrack to parent
-            v = v->parent;
-        }
+        else
+            v = v->parent; // backtrack to parent if no child exists
         current_depth++;
     }
-    return -1; // no node at depth 'depth'
+    return -1; // No node at depth 'depth'
 }
 
-
+// TODO: there must be a nicer solution for optional parameters than overloading
 void BST::random(int nodes, int min, int max) {
     random(nodes, min, max, false);
 }
 
 void BST::random(int nodes, int min, int max, bool insertByValue) {
     for (int i = 0; i < nodes; i++)
+        // Should the new node be inserted according yo the value / randomly?
         if (insertByValue)
             this->insertByValue(randomNum(min, max));
         else

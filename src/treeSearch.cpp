@@ -11,12 +11,18 @@ using namespace BinarySearchTree;
 
 //depth-first search
 void search::DFS(node* root) {
+    search::DFS(root, -1000);
+}
+
+void search::DFS(node* root, int searchValue) {
     stack<node*> s;
     s.push(root);
     while (!s.empty()) {
         node* curr = s.top();
         s.pop();
         // do something with curr node
+        if (curr->data == searchValue)
+            return; //stop search if searchValue has been found
 //        cout << curr->data << " ";
         if (curr->right != nullptr) {
             s.push(curr->right);
@@ -28,14 +34,20 @@ void search::DFS(node* root) {
     cout << endl;
 }
 
-//bre
+//breadth-first search
 void search::BFS(node* root) {
+    search::BFS(root, -1000);
+}
+
+void search::BFS(node* root, int searchValue) {
     queue<node*> q;
     q.push(root);
     while (!q.empty()) {
         node* curr = q.front();
         q.pop();
         // do something with curr node
+        if (curr->data == searchValue)
+            return; //stop search if searchValue has been found
 //        cout << curr->data << " ";
         if (curr->left != nullptr) {
             q.push(curr->left);

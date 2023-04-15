@@ -12,7 +12,9 @@ using namespace BinarySearchTree;
 // various tree search algorithms
 namespace search {
     void DFS(node* root);
+    void DFS(node* root, int searchValue);
     void BFS(node* root);
+    void BFS(node* root, int searchValue);
     void printTree(node* root);
 }
 
