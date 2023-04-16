@@ -5,7 +5,7 @@ using namespace std;
 using namespace BinarySearchTree;
 
 int main() {
-    int n = 100;
+    int n = 10000;
     int searchDepth = 8;
     BST tree(n);
     node* root_node = tree.root().v;

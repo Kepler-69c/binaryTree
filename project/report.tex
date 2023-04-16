@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{lmodern}
+\usepackage{tikz}
 \usepackage{listings}
 \usepackage[english,ngerman]{babel}
 \usepackage{graphicx}
@@ -58,6 +59,7 @@ In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-
 
 %TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
 %TODO: alle begriffe, die oft vorkommen, gleich schreiben: z.B. Tree-Search Algorithmus (angang immer gross, verbunden)
+%TODO: es ist kein suchbaum, den wir benutzt haben, sondern ein normaler baum -> ändern
 
 \section{Einleitung}
 Das Ziel dieses Projekts ist es, die Komplexitäten verschiedener Tree-Search-Algorithmen hinsichtlich der Größe und Tiefe des Baumes zu vergleichen. Dabei wird ein Programm in der Programmiersprache \CC erstellt, um die Berechnungen zu messen und zu überprüfen. 
@@ -97,20 +99,87 @@ Untersucht wurden verschiedene Tree-Search-Algorithmen, unter anderem die Tiefen
 %TODO: untersucht -> umformulieren, mathematisch berechnet -> umformulieren
 
 \subsection{Der Suchbaum}
-Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vorteil hat, leicht skalierbar zu sein. Auch ist die Tiefe des Baumes proportional zu der Anzahl der Knoten, was die Regelung der Baumtiefe erleichtert.
+Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vorteil hat, leicht skalierbar zu sein. Auch ist die Tiefe des Baumes logarithmisch zu der Anzahl der Knoten, was die Regelung der Baumtiefe erleichtert. Da jeder Knoten zwei \emph{child}-Knoten enthält, ist die Tiefe $d$ eines binären Baumes mit $n$ Knoten
+$$d \approx \log_2(n)$$%\text{.}$$
+\cite{c2_algorithms}.
 %TODO: ist die automatische Tiefe ein Vorteil?
+%TODO: stimmt das Zitat?
 
-Der Baum wurde wie folgt umgesetzt: 
+Der Baum wurde wie folgt umgesetzt: Der Baum besteht aus einzelnen Knoten, die aus einem \emph{struct}-Datentyp bestehen, der über Pointer auf die \emph{child}- und \emph{parent}-Knoten verweist.
 
 \lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinarySearchTree.h}
 
+Der Vorteil einer solchen Struktur ist, dass einzelne Knoten leicht geändert werden können. Zusätzlich beschleunigt eine solche Implementierung den Aufruf der einzelnen Knoten, was die Gesamtlaufzeit des Programms verkürzt.
+
 \subsection{Breitensuche}
 
+Die Breitensuche (engl. Breadth-First-Search, BFS) ist ein ein Tree-Search Algorithmus, der Graphen schichtweise durchsucht, beginnend bei einem Startknoten und sich schrittweise auf benachbarte Knoten ausbreitet (Abbildung \ref{fig:binary_tree_bfs}).
+%TODO: soll das in der Theorie stehen?
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[level distance=1.5cm,  level 1/.style={sibling distance=3cm},  level 2/.style={sibling distance=1.5cm},  every node/.style={circle, draw}]
+  \node (A) {A}
+    child {node (B) {B}
+      child {node (D) {D}}
+      child {node (E) {E}}
+    }
+    child {node (C) {C}
+      child {node (F) {F}}
+      child {node (G) {G}
+        child {node (H) {H}}
+      }
+    };
+  
+  \draw[red,very thick] (A)--(B)--(C)--(D)--(E)--(F)--(G)--(H);
+\end{tikzpicture}
+\caption{Der Breitensuchalgorithmus auf einem binären Baum, rot dargestellt}
+\label{fig:binary_tree_bfs}
+\end{figure}
+
+Der im Programm gebrauchte Algorithmus benutzte eine \emph{Queue}, also eine Warteschlangen-Datenstruktur für die Speicherung des Baumes. Dabei werden jeweils alle Knoten in einer Schicht nacheinander durchsucht, auf \emph{child}-Knoten untersucht und anschliessend in die \emph{Queue} gespeichert. Dies wiederholt sich bis zum Baumende.
+
+Die schichtweise Suche sorgt dafür, dass Knoten in gleicher Entfernung vom Startknoten zuerst besucht werden, bevor Knoten in weiter entfernten Schichten besucht werden. Dies ist besonders effizient bei flachen Bäumen.
+%TODO: rechnung für Geschw.
+
+\subsubsection{Berechnung der Komplexität}
+
 \subsection{Tiefensuche}
+
+Die Tiefensuche (engl. Depth-First-Search, DFS) ist ein Tree-Search Algorithmus der einen Graphen in die Tiefe durchsucht, d.h. sie geht so weit wie möglich in einen Pfad, bevor sie sich umwendet und nach anderen Pfaden sucht (Abbildung \ref{fig:binary_tree_dfs}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[level distance=1.5cm,  level 1/.style={sibling distance=3cm},  level 2/.style={sibling distance=1.5cm},  every node/.style={circle, draw}]
+  \node (A) {A}
+    child {node (B) {B}
+      child {node (D) {D}}
+      child {node (E) {E}}
+    }
+    child {node (C) {C}
+      child {node (F) {F}}
+      child {node (G) {G}
+        child {node (H) {H}}
+      }
+    };
+  
+  \draw[red,very thick] (A)--(B)--(D)--(E)--(C)--(F)--(G)--(H);
+  
+\end{tikzpicture}
+\caption{Der Tiefensuchalgorithmus auf einem binären Baum, rot dargestellt}
+\label{fig:binary_tree_dfs}
+\end{figure}
+
+Der für das Projekt geschriebene Algorithmus verwendet eine \emph{stack}-Datenstruktur, um die Reihenfolge der besuchenden Knoten zu speichern. Dabei wird ein Pfad durch den Baum gewählt, der bis zum einem Blatt begangen wird. Danach wird der Algorithmus bis zum letzten nicht vollständig erforschten Knoten zurückgeführt, von wo die Suche nochmals beginnt. Dieser Vorgang wird fortgesetzt, bis alle Knoten besucht wurden.
+%TODO: soll stack, queue erklärt werden?
+%TODO: soll code gezeigt werden?
+
+\subsubsection{Berechnung der Komplexität}
 
 \subsection{Monte-Carlo Baumsuche}
 
 \section{Resultate}
+Der Quellcode für das Programm ist 
 \section{Schlussfolgerung}
 \section{Reflexion}
 
