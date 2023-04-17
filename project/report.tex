@@ -1,0 +1,70 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[total={148mm,230mm}]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{lmodern}
+\usepackage[english,ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{apacite}
+
+\title{Vergleich der Komplexität von \break Tree-Search-Algorithmen}
+\author{}
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagebreak
+\selectlanguage{english}
+\begin{abstract}
+In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-Algorithmen untersucht. Es werden verschiedene Algorithmen wie die Tiefensuche, Breitensuche und andere heuristische Suchalgorithmen auf binären Suchbäumen getestet. Dabei wird die Anzahl der durchsuchten Knoten und die benötigte Zeit gemessen, um die Effizienz der Algorithmen zu vergleichen. Das Ziel ist es, die Komplexität der Suchalgorithmen zu berechnen, um diese dadurch zu vergleichen.
+\end{abstract}
+\selectlanguage{ngerman}
+\pagebreak
+\tableofcontents
+\pagebreak
+
+%TODO: aus der Sicht einer 3. Person schreiben!!
+
+\section{Einleitung}
+\cite{c2_algorithms}
+\section{Theorie}
+\subsection{Suchbaum}
+Suchbäume sind Datenstrukturen aus der Graphentheorie. Der Begriff "Suchbaum" bezieht sich darauf, dass die Datenstruktur baumartig organisiert ist. Ein Baum besteht aus einer Wurzel, die den obersten Knoten (engl. nodes) darstellt, und einer Anzahl von Zweigen oder Kanten, die von der Wurzel zu den Blättern führen, die die Endpunkte des Baums darstellen. Jeder Knoten im Baum repräsentiert eine Entscheidung oder einen Zustand, und jeder Zweig repräsentiert eine Aktion, die von diesem Zustand aus ausgeführt werden kann.
+
+Ein Baum ist also ein zusammenhängender Graph, der keine geschlossenen Pfade enthält\cite{graphs}, d.h. der sich nur in eine Richtung von der Wurzel aus erstreckt.
+
+\subsubsection{binärer Suchbaum}
+Ein binärer Suchbaum sind eine besondere Art von Suchbaum, bei dem jeder Knoten maximal zwei Kindknoten (engl. child nodes) haben kann. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zu einem normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, dass jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum ist.
+%TODO: letzten Satz besser formulieren / restliche Theorie ist im Plural geschrieben, hier auch ändern?
+
+Der Vorteil dieser speziellen Anordnung ist, dass man schnell einen Knoten im Baum finden kann. Auch ist das Einfügen und Löschen von Knoten aus dem Baum einfacher.
+
+\subsection{Tree-Search Algorithmus}
+Tree-Search-Algorithmen sind eine Art von Algorithmen, die zur Lösung von Suchproblemen verwendet werden. Sie sind nützlich, wenn aus einer grossen Anzahl von möglichen Optionen die passende gefunden werden muss.
+%TODO: passenden?
+
+Tree-Search-Algorithmen arbeiten mit Suchbäumen, in denen die verschiedenen Optionen als Knoten, die über Kanten verbunden dargestellt sind. Die Suche nach der Lösung des Problems besteht darin, durch die Baumstruktur zu navigieren und den Pfad zu finden, der von der Wurzel (engl. root) bis zum Zielzustand führt.
+%TODO: Zustand oder Option?
+
+\subsection{Komplexität von Tree-Search-Algorithmen}
+Das Durchsuchen eines Baumes nach einem gewünschten Zustand dauert nicht immer gleich lange. Es hängt vielmehr von einer Vielzahl verschiedener Faktoren ab, wie zum Beispiel der Größe und Tiefe des Suchbaumes oder der Anzahl der Knoten. Eine Abschätzung für die obere Schranke der Suchdauer und damit der Effizienz eines Tree-Search-Algorithmus gibt die Komplexität. 
+%TODO: verzweigungsfaktor auch nennen?
+
+Die Komplexität von Tree-Search-Algorithmen wird in der sogenannten $O$-Notation ausgedrückt, die angibt, wie schnell die Laufzeit eines Suchalgorithmus mit der Grösse eines Baumes wächst. Eine Komplexität von $O(n)$ bedeutet beispielsweise, dass die Laufzeit eines Algorithmus linear von der Anzahl der Knoten $n$ abhängt.
+
+\section{Algorithmen im Vergleich}
+
+
+\section{Resultate}
+\section{Schlussfolgerung}
+\section{Reflexion}
+
+\pagebreak
+\bibliographystyle{apacite}
+\bibliography{bibfile}
+
+
+\end{document}

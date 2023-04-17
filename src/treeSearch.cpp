@@ -17,7 +17,7 @@ void search::DFS(node* root) {
         node* curr = s.top();
         s.pop();
         // do something with curr node
-        cout << curr->data << " ";
+//        cout << curr->data << " ";
         if (curr->right != nullptr) {
             s.push(curr->right);
         }
@@ -36,7 +36,7 @@ void search::BFS(node* root) {
         node* curr = q.front();
         q.pop();
         // do something with curr node
-        cout << curr->data << " ";
+//        cout << curr->data << " ";
         if (curr->left != nullptr) {
             q.push(curr->left);
         }
