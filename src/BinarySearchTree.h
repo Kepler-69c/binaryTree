@@ -48,11 +48,13 @@ namespace BinarySearchTree {
         Position root() const;
         PositionList positions() const;
         void addRoot(int d);
-        void printTree() const;
         //BST functions:
-        void insert(int d);
+        void insertByValue(int d);
         void random(int nodes, int min, int max);
+        void random(int nodes, int min, int max, bool insertByValue);
         //BT functions:
+        void insertRandom(int d);
+        int getFromDepth(int depth);
         void expandExternal(const Position &p, int left=0, int right=0);
         //TODO: not implemented
         Position removeAboveExternal(const Position& p);

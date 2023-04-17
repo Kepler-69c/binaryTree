@@ -9,8 +9,16 @@
 using namespace BinarySearchTree;
 using namespace std;
 
+int randomNum(int min, int max) {
+    random_device rd;
+    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
+    uniform_int_distribution<int> dis(min, max);
+    return dis(gen);
+}
+
 BST::BST(int d) {
     _Root = nullptr;
+    n=0;
     addRoot(d);
 }
 
@@ -30,7 +38,7 @@ void BST::expandExternal(const Position &p, int left, int right) {
     n += 2;
 }
 
-void BST::insert(int d) {
+void BST::insertByValue(int d) {
     node* v = _Root;
     node* p = nullptr;
     while (v != nullptr) {
@@ -54,33 +62,65 @@ void BST::insert(int d) {
     this->n++;
 }
 
-void BST::random(int nodes, int min, int max) {
-    random_device rd;
-    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
-    uniform_int_distribution<int> dis(min, max);
+// TODO: values can be inserted randomly multiple times -> fix
+void BST::insertRandom(int d) {
+    node* v = _Root;
+    node* p = nullptr;
 
-    for (int i = 0; i < nodes; i++)
-        this->insert(dis(gen));
+    while (v != nullptr) {
+        p = v;
+        // Randomly decide whether to go left or right
+        if (randomNum(0, 1) == 0)
+            v = v->left;
+        else
+            v = v->right;
+    }
 
+    // Insert the new node in the missing place
+    if (randomNum(0, 1) == 0) {
+        p->left = new node(d);
+        p->left->parent = p;
+    } else {
+        p->right = new node(d);
+        p->right->parent = p;
+    }
+    n++;
 }
 
-
-
-void BST::printTree() const {
-    cout << "In-order traversal: ";
-    stack<node*> s;
+int BST::getFromDepth(int depth) {
     node* v = _Root;
-    while (!s.empty() || v != nullptr) {
-        if (v != nullptr) {
-            s.push(v);
+    int current_depth = 0;
+    while (v != nullptr) {
+        if (current_depth == depth) {
+            // Randomly select whether to return left or right node
+            if (randomNum(0, 1) == 0 && v->left != nullptr) {
+                return v->left->data;
+            } else if (v->right != nullptr) {
+                return v->right->data;
+            }
+        }
+        // Traverse to the next level of the tree
+        if (randomNum(0, 1) == 0 && v->left != nullptr)
             v = v->left;
-        }
-        else {
-            v = s.top();
-            s.pop();
-            cout << v->data << " ";
+        else if (v->right != nullptr)
             v = v->right;
-        }
+        else
+            v = v->parent; // backtrack to parent if no child exists
+        current_depth++;
     }
-    cout << endl;
+    return -1; // No node at depth 'depth'
+}
+
+// TODO: there must be a nicer solution for optional parameters than overloading
+void BST::random(int nodes, int min, int max) {
+    random(nodes, min, max, false);
+}
+
+void BST::random(int nodes, int min, int max, bool insertByValue) {
+    for (int i = 0; i < nodes; i++)
+        // Should the new node be inserted according yo the value / randomly?
+        if (insertByValue)
+            this->insertByValue(randomNum(min, max));
+        else
+            this->insertRandom(randomNum(min, max));
 }
