@@ -21,11 +21,30 @@ node* accessNext(node* Parent)
     {return Parent->right;}
 }
 
-bool nodetest(node* Parent)
+void reset(node* child)
 {
-    node* selectedChild = accessNext(Parent);
-    
-
+    if (child->parent->left == child) { child->parent->left = nullptr; }
+    else { child->parent->right = nullptr; }
 }
 
+int nodetest(node* Parent, int Value)
+{
+    BST::Position PositionInhit;
+    if (Parent->left == nullptr) { node* selectedChild = Parent->right; }
+    else if (Parent->right == nullptr) { node* selectedChild = Parent->left; }
+    else { node* selectedChild = accessNext(Parent); }
+    PositionInhit.v = selectedChild;
+    bool Is_external = PositionInhit.isExternal();
+    if (selectedChild->data == Value) {
+        return selectedChild->data;
+    }
+    else if (Is_external) {
+        reset(selectedChild);
+        delete (selectedChild);
+        return -1;
+    }
+    else {
+        return nodetest(selectedChild, Value);
+    }
+}
 
