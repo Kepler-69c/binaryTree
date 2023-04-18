@@ -1,5 +1,5 @@
 // Created: 3/30/23.
-
+#pragma once
 #ifndef BINARYTREE_TREESEARCH_H
 #define BINARYTREE_TREESEARCH_H
 
