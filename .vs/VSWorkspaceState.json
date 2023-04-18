@@ -6,8 +6,14 @@
     ]
   },
   "ExpandedNodes": [
-    ""
+    "",
+    "\\.github",
+    "\\.idea",
+    "\\cmake-build-debug",
+    "\\out",
+    "\\out\\build",
+    "\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\fabia\\Source\\Repos\\BT",
+  "SelectedNode": "\\src\\MCTS.cpp",
   "PreviewInSolutionExplorer": false
 }

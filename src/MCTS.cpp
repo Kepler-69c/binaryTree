@@ -1,7 +1,10 @@
 #include "MCTS.h"
+#include <queue>
+#include <future>
 
 using namespace std;
 using namespace BinarySearchTree;
+
 
 float gen_random_float(float min, float max)
 {
@@ -21,11 +24,37 @@ node* accessNext(node* Parent)
     {return Parent->right;}
 }
 
-bool nodetest(node* Parent)
-{
-    node* selectedChild = accessNext(Parent);
-    
 
+
+int nodetest(node* Parent, int Value, int MaxDepth, int Depth)
+{
+    BST::Position PositionInhit;
+    queue<node*> Storage;
+    node* selectedChild = nullptr;
+    if (Parent->left == nullptr) { selectedChild = Parent->right; }
+    else if (Parent->right == nullptr) { selectedChild = Parent->left; }
+    else { selectedChild = accessNext(Parent); }
+    PositionInhit.v = selectedChild;
+    bool Is_external = PositionInhit.isExternal();
+    if (selectedChild->data == Value) {
+        return selectedChild->data;
+    }
+    else if (Is_external || Depth == MaxDepth) {
+        Storage.push(selectedChild);
+
+        return -1;
+    }
+    else {
+        Depth++;
+        return nodetest(selectedChild, Value, MaxDepth, Depth);
+    }
 }
 
+int MCTS(int Value, int MaxDepth, int Size)
+{
+    BST tree(Size);
+    node* root_node = tree.root().v;
+
+    int result = nodetest();
+}
 
