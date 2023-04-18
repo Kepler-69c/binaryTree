@@ -8,4 +8,5 @@ add_executable(
             main.cpp
             src/treeSearch.cpp src/treeSearch.h
             src/BinarySearchTree.cpp src/BinarySearchTree.h
+            src/xorshift.h
 )

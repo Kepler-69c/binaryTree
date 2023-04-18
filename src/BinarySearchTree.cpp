@@ -1,20 +1,20 @@
 // Created on 4/6/23.
 
-#include <iostream>
-#include <random>
-#include <functional>
+//#include <random>
+//#include <functional>
 #include <stack>
 #include "BinarySearchTree.h"
+#include "xorshift.h"
 
 using namespace BinarySearchTree;
 using namespace std;
 
-int randomNum(int min, int max) {
-    random_device rd;
-    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
-    uniform_int_distribution<int> dis(min, max);
-    return dis(gen);
-}
+//int randomNum(int min, int max) {
+//    random_device rd;
+//    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
+//    uniform_int_distribution<int> dis(min, max);
+//    return dis(gen);
+//}
 
 BST::BST(int d) {
     _Root = nullptr;
@@ -64,20 +64,21 @@ void BST::insertByValue(int d) {
 
 // TODO: values can be inserted randomly multiple times -> fix
 void BST::insertRandom(int d) {
+    Xorshift128Plus rng;
     node* v = _Root;
     node* p = nullptr;
 
     while (v != nullptr) {
         p = v;
         // Randomly decide whether to go left or right
-        if (randomNum(0, 1) == 0)
+        if (rng.random_integer(0, 1) == 0)
             v = v->left;
         else
             v = v->right;
     }
 
     // Insert the new node in the missing place
-    if (randomNum(0, 1) == 0) {
+    if (rng.random_integer(0, 1) == 0) {
         p->left = new node(d);
         p->left->parent = p;
     } else {
@@ -88,19 +89,20 @@ void BST::insertRandom(int d) {
 }
 
 int BST::getFromDepth(int depth) {
+    Xorshift128Plus rng;
     node* v = _Root;
     int current_depth = 0;
     while (v != nullptr) {
         if (current_depth == depth) {
             // Randomly select whether to return left or right node
-            if (randomNum(0, 1) == 0 && v->left != nullptr) {
+            if (rng.random_integer(0, 1) == 0 && v->left != nullptr) {
                 return v->left->data;
             } else if (v->right != nullptr) {
                 return v->right->data;
             }
         }
         // Traverse to the next level of the tree
-        if (randomNum(0, 1) == 0 && v->left != nullptr)
+        if (rng.random_integer(0, 1) == 0 && v->left != nullptr)
             v = v->left;
         else if (v->right != nullptr)
             v = v->right;
@@ -117,10 +119,11 @@ void BST::random(int nodes, int min, int max) {
 }
 
 void BST::random(int nodes, int min, int max, bool insertByValue) {
+    Xorshift128Plus rng;
     for (int i = 0; i < nodes; i++)
         // Should the new node be inserted according yo the value / randomly?
         if (insertByValue)
-            this->insertByValue(randomNum(min, max));
+            this->insertByValue(rng.random_integer(min, max));
         else
-            this->insertRandom(randomNum(min, max));
+            this->insertRandom(rng.random_integer(min, max));
 }
