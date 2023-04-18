@@ -1,20 +1,12 @@
 // Created on 4/6/23.
 
-//#include <random>
-//#include <functional>
 #include <stack>
+#include <queue>
 #include "BinarySearchTree.h"
 #include "xorshift.h"
 
 using namespace BinarySearchTree;
 using namespace std;
-
-//int randomNum(int min, int max) {
-//    random_device rd;
-//    mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
-//    uniform_int_distribution<int> dis(min, max);
-//    return dis(gen);
-//}
 
 BST::BST(int d) {
     _Root = nullptr;
@@ -36,6 +28,27 @@ void BST::expandExternal(const Position &p, int left, int right) {
     v->right = new node(right);
     v->right->parent = v;
     n += 2;
+}
+
+int BST::depth() const {
+    if (isEmpty()) {
+        return 0;
+    }
+    int max_depth = 0;
+    std::stack<std::pair<node*, int>> s;
+    s.push(std::make_pair(_Root, 1));
+    while (!s.empty()) {
+        auto curr = s.top();
+        s.pop();
+        max_depth = std::max(max_depth, curr.second);
+        if (curr.first->left) {
+            s.push(std::make_pair(curr.first->left, curr.second + 1));
+        }
+        if (curr.first->right) {
+            s.push(std::make_pair(curr.first->right, curr.second + 1));
+        }
+    }
+    return max_depth;
 }
 
 void BST::insertByValue(int d) {

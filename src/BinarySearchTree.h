@@ -45,6 +45,7 @@ namespace BinarySearchTree {
         BST(int d);
         int size() const;
         bool isEmpty() const;
+        int depth() const;
         Position root() const;
         PositionList positions() const;
         void addRoot(int d);
