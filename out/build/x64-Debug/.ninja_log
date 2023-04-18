@@ -1,5 +1,4 @@
 # ninja log v5
-67	444	7031785969135710	CMakeFiles/binaryTree.dir/src/MCTS.cpp.obj	953bb8527d17ca89
 5	1248	7031785977236477	CMakeFiles/binaryTree.dir/main.cpp.obj	c74c33d848a320cb
 26	1438	7031785979128763	CMakeFiles/binaryTree.dir/src/treeSearch.cpp.obj	7ef0fdbc4796a0ff
 48	1507	7031785979806237	CMakeFiles/binaryTree.dir/src/BinarySearchTree.cpp.obj	bc569117fa1a5032
