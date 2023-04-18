@@ -103,27 +103,30 @@ void BST::insertRandom(int d) {
 
 int BST::getFromDepth(int depth) {
     Xorshift128Plus rng;
-    node* v = _Root;
-    int current_depth = 0;
-    while (v != nullptr) {
-        if (current_depth == depth) {
-            // Randomly select whether to return left or right node
-            if (rng.random_integer(0, 1) == 0 && v->left != nullptr) {
-                return v->left->data;
-            } else if (v->right != nullptr) {
-                return v->right->data;
+    std::vector<Position> positions;
+    positions.push_back(root());
+    while (!positions.empty()) {
+        Position p = positions.back();
+        positions.pop_back();
+        if (p.v != nullptr && depth > 0) {
+            positions.push_back(p.left());
+            positions.push_back(p.right());
+            depth--;
+        } else if (p.v != nullptr && depth == 0) {
+            positions.push_back(p.left());
+            positions.push_back(p.right());
+            if (p.isExternal()) {
+                std::vector<int> values;
+                while (!p.isRoot()) {
+                    values.push_back(*p);
+                    p = p.parent();
+                }
+                values.push_back(*p);
+                return values[rng.random_integer(0, values.size() - 1)];
             }
         }
-        // Traverse to the next level of the tree
-        if (rng.random_integer(0, 1) == 0 && v->left != nullptr)
-            v = v->left;
-        else if (v->right != nullptr)
-            v = v->right;
-        else
-            v = v->parent; // backtrack to parent if no child exists
-        current_depth++;
     }
-    return -1; // No node at depth 'depth'
+    throw std::out_of_range("Depth too large for tree");
 }
 
 // TODO: there must be a nicer solution for optional parameters than overloading

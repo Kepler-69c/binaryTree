@@ -11,13 +11,15 @@ void repetition(int nodes, int repetition, int startDepth, BST tree, node* root)
     csv << "Nodes: " << nodes << ", Search: DFS\n";
 
     for (int j = startDepth; j < tree.depth()-1; ++j) {
-        int searchValue = tree.getFromDepth(j);
-        cout << "Gesuchter Wert:    " << searchValue << endl;
-        csv << "Depth " << j << ":,";
+        csv << "Depth " << j << ":," << j << ",";
+        cout << "Depth " << j << endl;
 
         for (int i = 0; i < repetition; ++i) {
+            int searchValue = tree.getFromDepth(j);
+            cout << "Gesuchter Wert:    " << searchValue << endl;
+
             clock_t time0 = clock();
-            search::DFS(root, searchValue);
+            search::BFS(root, searchValue);
             clock_t time1 = clock();
             csv << double(time1 - time0) / CLOCKS_PER_SEC << ",";
         }
@@ -43,9 +45,9 @@ void comparison(int depth, BST tree, node* root) {
 }
 
 int main() {
-    int n = 10000;
+    int n = 1000000;
     int searchDepth = 4;
-    int repeating = 5;
+    int repeating = 10;
     BST tree(n);
     node* root_node = tree.root().v;
 
