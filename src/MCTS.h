@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BinarySearchTree.h"
-using namespace BinarySearchTree;
+#include "BinaryTree.h"
+using namespace BinaryTree;
 
-double MCTS(BST tree, node *root_node, int MaxDepth, int searchValue);
+double MCTS(BT tree, node *root_node, int MaxDepth, int searchValue);

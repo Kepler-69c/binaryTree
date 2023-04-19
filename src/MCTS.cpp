@@ -3,7 +3,7 @@
 #include "MCTS.h"
 #include "xorshift.h"
 using namespace std;
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 
 // TODO: comment the code
 
@@ -21,7 +21,7 @@ node* accessNext(node* Parent) {
 }
 
 void deletion(node* Nodeptr) {
-    BST::Position Position;
+    BT::Position Position;
     node* Parent =Nodeptr;
     while(Nodeptr != nullptr) {
         Position.v = Parent->right;
@@ -42,7 +42,7 @@ void deletion(node* Nodeptr) {
 }
 
 int nodetest(node* Parent, int Value, int MaxDepth, int Depth) {
-    BST::Position PositionInhit;
+    BT::Position PositionInhit;
     node* selectedChild = nullptr;
     if (Parent->left == nullptr) { selectedChild = Parent->right; }
     else if (Parent->right == nullptr) { selectedChild = Parent->left; }
@@ -59,7 +59,7 @@ int nodetest(node* Parent, int Value, int MaxDepth, int Depth) {
     }
 }
 
-double MCTS(BST tree, node* root_node, int maxDepth, int searchValue) {
+double MCTS(BT tree, node* root_node, int maxDepth, int searchValue) {
     int result;
     clock_t time0 = clock();
     while (result < 0){

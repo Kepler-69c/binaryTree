@@ -1,13 +1,13 @@
 #include <fstream>
 #include<list>
-#include "src/BinarySearchTree.h"
+#include "src/BinaryTree.h"
 #include "src/treeSearch.h"
 #include "src/MCTS.h"
 
 using namespace std;
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 
-void repetitionDepth(int nodes, int repetition, int startDepth, BST tree, node* root) {
+void repetitionDepth(int nodes, int repetition, int startDepth, BT tree, node* root) {
 //    https://stackoverflow.com/a/28840805
     ofstream csv;
     csv.open ("data.csv");
@@ -39,7 +39,7 @@ void repetitionSize(int repeating, int startNodes, int growth) {
 //    for (int nodes = startNodes; nodes < 5000000; nodes = nodes * growFactor) { // 5 million is the max tree size for my pc
     for (int nodes = startNodes; nodes < 5000001; nodes = nodes + growth) {
         // create tree
-        BST tree(nodes);
+        BT tree(nodes);
         node* root_node = tree.root().v;
         tree.random(nodes, 1, nodes*2);
         cout << "Node number: " << nodes << endl;
@@ -63,7 +63,7 @@ void repetitionSize(int repeating, int startNodes, int growth) {
     csv.close();
 }
 
-void comparison(int depth, BST tree, node* root) {
+void comparison(int depth, BT tree, node* root) {
     int searchValue = tree.getFromDepth(depth);
     cout << "Gesuchter Wert:    " << searchValue << endl;
 
@@ -90,7 +90,7 @@ int main() {
     int growFactor = 10;
     int growAddend = 100000;
 
-    BST tree(n);
+    BT tree(n);
     node* root_node = tree.root().v;
 
     clock_t time0 = clock();
@@ -106,8 +106,10 @@ int main() {
 //    repetitionSize(repeating, startNodes, growAddend);
 
     cout << "Starting MCTS" << endl;
+    clock_t time2 = clock();
     double value = MCTS(tree, root_node, searchDepth, searchValue);
-    cout << "Time taken: " << value << endl;
+    clock_t time3 = clock();
+    cout << "Time taken: " << value << "; Outside: " << double(time3 - time2) / CLOCKS_PER_SEC << endl;
 
     return 0;
 }

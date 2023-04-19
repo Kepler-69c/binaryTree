@@ -2,26 +2,26 @@
 
 #include <stack>
 #include <queue>
-#include "BinarySearchTree.h"
+#include "BinaryTree.h"
 #include "xorshift.h"
 
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 using namespace std;
 
-BST::BST(int d) {
+BT::BT(int d) {
     _Root = nullptr;
     n=0;
     addRoot(d);
 }
 
-void BST::addRoot(int d) { _Root = new node(d); n = 1;}
+void BT::addRoot(int d) { _Root = new node(d); n = 1;}
 
-int BST::size() const {return n;}
-bool BST::isEmpty() const {return size() == 0;}
+int BT::size() const {return n;}
+bool BT::isEmpty() const {return size() == 0;}
 
-BST::Position BST::root() const { return Position(_Root);}
+BT::Position BT::root() const { return Position(_Root);}
 
-void BST::expandExternal(const Position &p, int left, int right) {
+void BT::expandExternal(const Position &p, int left, int right) {
     node* v = p.v;
     v->left = new node(left);
     v->left->parent = v;
@@ -30,7 +30,7 @@ void BST::expandExternal(const Position &p, int left, int right) {
     n += 2;
 }
 
-int BST::depth() const {
+int BT::depth() const {
     if (isEmpty()) {
         return 0;
     }
@@ -51,7 +51,7 @@ int BST::depth() const {
     return max_depth;
 }
 
-void BST::insertByValue(int d) {
+void BT::insertByValue(int d) {
     node* v = _Root;
     node* p = nullptr;
     while (v != nullptr) {
@@ -76,7 +76,7 @@ void BST::insertByValue(int d) {
 }
 
 // TODO: values can be inserted randomly multiple times -> fix
-void BST::insertRandom(int d) {
+void BT::insertRandom(int d) {
     Xorshift128Plus rng;
     node* v = _Root;
     node* p = nullptr;
@@ -101,7 +101,7 @@ void BST::insertRandom(int d) {
     n++;
 }
 
-int BST::getFromDepth(int depth) {
+int BT::getFromDepth(int depth) {
     Xorshift128Plus rng;
     std::vector<Position> positions;
     positions.push_back(root());
@@ -130,11 +130,11 @@ int BST::getFromDepth(int depth) {
 }
 
 // TODO: there must be a nicer solution for optional parameters than overloading
-void BST::random(int nodes, int min, int max) {
+void BT::random(int nodes, int min, int max) {
     random(nodes, min, max, false);
 }
 
-void BST::random(int nodes, int min, int max, bool insertByValue) {
+void BT::random(int nodes, int min, int max, bool insertByValue) {
     Xorshift128Plus rng;
     for (int i = 0; i < nodes; i++)
         // Should the new node be inserted according yo the value / randomly?
