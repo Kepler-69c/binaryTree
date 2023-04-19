@@ -107,9 +107,9 @@ int main() {
 
     cout << "Starting MCTS" << endl;
     clock_t time2 = clock();
-    double value = MCTS(tree, root_node, searchDepth, searchValue);
+    MCTS(tree, root_node, searchDepth, searchValue);
     clock_t time3 = clock();
-    cout << "Time taken: " << value << "; Outside: " << double(time3 - time2) / CLOCKS_PER_SEC << endl;
+    cout << "Time taken: " << double(time3 - time2) / CLOCKS_PER_SEC << endl;
 
     return 0;
 }

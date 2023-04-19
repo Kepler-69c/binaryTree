@@ -59,12 +59,10 @@ int nodetest(node* Parent, int Value, int MaxDepth, int Depth) {
     }
 }
 
-double MCTS(BT tree, node* root_node, int maxDepth, int searchValue) {
+void MCTS(BT tree, node* root_node, int maxDepth, int searchValue) {
     int result;
-    clock_t time0 = clock();
     while (result < 0){
-    result = nodetest(root_node,searchValue,maxDepth,0);}
-    clock_t time1 = clock();
-    return double(time1-time0) / CLOCKS_PER_SEC;
+        result = nodetest(root_node,searchValue,maxDepth,0);
+    }
 }
 
