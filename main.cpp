@@ -96,6 +96,7 @@ int main() {
     clock_t time0 = clock();
     tree.random(n, 1, n*2);
     clock_t time1 = clock();
+    int searchValue = tree.getFromDepth(searchDepth);
     cout << "Time taken: (Tree) " << double(time1 - time0) / CLOCKS_PER_SEC << " seconds" << endl;
     cout << "Maximum tree depth " << tree.depth() << endl;
 //    search::printTree(root_node);
@@ -105,7 +106,7 @@ int main() {
 //    repetitionSize(repeating, startNodes, growAddend);
 
     cout << "Starting MCTS" << endl;
-    double value = MCTS(tree, root_node, searchDepth);
+    double value = MCTS(tree, root_node, searchDepth, searchValue);
     cout << "Time taken: " << value << endl;
 
     return 0;
