@@ -4,10 +4,10 @@
 #include <stack>
 #include <queue>
 #include "treeSearch.h"
-#include "BinarySearchTree.h"
+#include "BinaryTree.h"
 
 using namespace std;
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 
 //depth-first search
 void search::DFS(node* root) {

@@ -1,18 +1,18 @@
 // Created on 4/6/23.
 
-#ifndef BINARYTREE_BST_H
-#define BINARYTREE_BST_H
+#ifndef BINARYTREE_BT_H
+#define BINARYTREE_BT_H
 
 #include <iostream>
 
 //En dehors des fonctions "insert()" et "random()", l'arbre de recherche binaire
 // peut également être utilisé comme un arbre binaire normal. Exemple:
 //
-//BST binaryTree(1);
+//BT binaryTree(1);
 //binaryTree.expandExternal(binaryTree.root().left(), 2, NULL);
 //binaryTree.printTree();
 
-namespace BinarySearchTree {
+namespace BinaryTree {
     struct node {
     public:
         int data;
@@ -22,7 +22,7 @@ namespace BinarySearchTree {
         node(int d) : data(d), left(NULL), right(NULL), parent(NULL) {}
     };
 
-    class BST {
+    class BT {
     public:
         class Position {
         public:
@@ -42,14 +42,14 @@ namespace BinarySearchTree {
         node* _Root{};
         int n; // node count
     public:
-        BST(int d);
+        BT(int d);
         int size() const;
         bool isEmpty() const;
         int depth() const;
         Position root() const;
         PositionList positions() const;
         void addRoot(int d);
-        //BST functions:
+        //BT functions:
         void insertByValue(int d);
         void random(int nodes, int min, int max);
         void random(int nodes, int min, int max, bool insertByValue);
@@ -65,6 +65,6 @@ namespace BinarySearchTree {
 
 
 
-} // BST
+} // BT
 
-#endif //BINARYTREE_BST_H
+#endif //BINARYTREE_BT_H

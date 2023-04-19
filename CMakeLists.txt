@@ -7,7 +7,7 @@ add_executable(
         binaryTree
             main.cpp
             src/treeSearch.cpp src/treeSearch.h
-            src/BinarySearchTree.cpp src/BinarySearchTree.h
+            src/BinaryTree.cpp src/BinaryTree.h
             src/xorshift.h
             src/MCTS.h src/MCTS.cpp
 )

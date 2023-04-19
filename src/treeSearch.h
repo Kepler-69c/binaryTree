@@ -4,10 +4,10 @@
 #define BINARYTREE_TREESEARCH_H
 
 #include "iostream"
-#include "BinarySearchTree.h"
+#include "BinaryTree.h"
 
 using namespace std;
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 
 // various tree search algorithms
 namespace search {

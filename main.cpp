@@ -1,12 +1,13 @@
 #include <fstream>
 #include<list>
-#include "src/BinarySearchTree.h"
+#include "src/BinaryTree.h"
 #include "src/treeSearch.h"
+#include "src/MCTS.h"
 
 using namespace std;
-using namespace BinarySearchTree;
+using namespace BinaryTree;
 
-void repetitionDepth(int nodes, int repetition, int startDepth, BST tree, node* root) {
+void repetitionDepth(int nodes, int repetition, int startDepth, BT tree, node* root) {
 //    https://stackoverflow.com/a/28840805
     ofstream csv;
     csv.open ("data.csv");
@@ -38,7 +39,7 @@ void repetitionSize(int repeating, int startNodes, int growth) {
 //    for (int nodes = startNodes; nodes < 5000000; nodes = nodes * growFactor) { // 5 million is the max tree size for my pc
     for (int nodes = startNodes; nodes < 5000001; nodes = nodes + growth) {
         // create tree
-        BST tree(nodes);
+        BT tree(nodes);
         node* root_node = tree.root().v;
         tree.random(nodes, 1, nodes*2);
         cout << "Node number: " << nodes << endl;
@@ -62,7 +63,7 @@ void repetitionSize(int repeating, int startNodes, int growth) {
     csv.close();
 }
 
-void comparison(int depth, BST tree, node* root) {
+void comparison(int depth, BT tree, node* root) {
     int searchValue = tree.getFromDepth(depth);
     cout << "Gesuchter Wert:    " << searchValue << endl;
 
@@ -80,7 +81,7 @@ void comparison(int depth, BST tree, node* root) {
 
 int main() {
     // comparison
-    int searchDepth = 4;
+    int searchDepth = 20;
     int n = 5000000;
 
     // repetition
@@ -89,19 +90,26 @@ int main() {
     int growFactor = 10;
     int growAddend = 100000;
 
-    BST tree(n);
+    BT tree(n);
     node* root_node = tree.root().v;
 
     clock_t time0 = clock();
     tree.random(n, 1, n*2);
     clock_t time1 = clock();
+    int searchValue = tree.getFromDepth(searchDepth);
     cout << "Time taken: (Tree) " << double(time1 - time0) / CLOCKS_PER_SEC << " seconds" << endl;
     cout << "Maximum tree depth " << tree.depth() << endl;
 //    search::printTree(root_node);
 
 //    comparison(searchDepth, tree, root_node);
 //    repetitionDepth(n, repeating, 1, tree, root_node);
-    repetitionSize(repeating, startNodes, growAddend);
+//    repetitionSize(repeating, startNodes, growAddend);
+
+    cout << "Starting MCTS" << endl;
+    clock_t time2 = clock();
+    MCTS(tree, root_node, searchDepth, searchValue);
+    clock_t time3 = clock();
+    cout << "Time taken: " << double(time3 - time2) / CLOCKS_PER_SEC << endl;
 
     return 0;
 }

@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 %\usepackage{lmodern}
 \usepackage{amsmath}
+\usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage[english,ngerman]{babel}
@@ -55,7 +56,10 @@ In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-
 \end{abstract}
 \selectlanguage{ngerman}
 \pagebreak
-\tableofcontents
+{%https://tex.stackexchange.com/a/306617
+  \hypersetup{hidelinks}
+  \tableofcontents
+}
 \pagebreak
 
 %TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
@@ -221,19 +225,37 @@ Um die Gesamtzeit zu berechnen, nutzt man die Formel $$ t(n,l,d) = I*n*(\sum_{k=
 Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des Baumes und der Grösse des Baumes gemessen. Bei der Tiefe wurde ein Baum mit $5'000'000$ Knoten benutzt, bei der Grösse Bäume zwischen $1'000$ und $5'000'000$ Knoten. Alle Messungen wurden $100$ Mal durchgeführt, um allfällige Fehler auszugleichen, angezeigt wird jeweils der Durchschnitt der Messungen. Eine grössere Anzahl an Knoten oder Messungen war wegen der begrenzten Rechenleistung der benutzten Geräte nicht möglich; selbst die folgenden Messungen haben jeweils mehr als 45 Minuten gebraucht.
 
 \subsection{Breitensuche}
-	\begin{figure}[h]
+	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/BFS_size.pdf}
 		\caption{Die Laufzeit der Breitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:bfs_time}
 	\end{figure}
 	
-Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit 
+Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abblidung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
 \subsection{Tiefensuche}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.85\linewidth]{img/DFS_size.pdf}
+		\caption{Die Laufzeit der Treitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:dfs_time}
+	\end{figure}
+	%TODO: kaufzeit zu laufzeit umschreiben
+	
+Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abblidung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
+
 \subsection{Monte-Carlo Baumsuche}
 
 \section{Schlussfolgerung}
 \section{Reflexion}
-Der Quellcode für das Programm ist 
+Das Projekt, vor allem das Schreiben des Programms war ziemlich ansprochsvoll, ging aber gut. Eines der grössten Probleme war die Effizienz des Baumes. Der Code musste mehrmals umgeschrieben werden, um eine schnelle Aufrufezeit der einzelnen Knoten zu ermöglichen.
+
+Als Schwierigkeit gestaltete sich auch das Generieren von Zufallszahlen, die man für die Knotenwerte und das Einfügen der Knoten in den Baum braucht. Zuerst verwendeten wir den Mersenne-Twister Pseudo-Zufallsgenerator, doch dieser war ausserordentlich langsam: um einen Baum mit 100'000 Knoten zu generieren brauchte es über 65 Sekunden. Durch den Einsatz des Xorshift128+ Pseudo-Zufallsgenerators konnte ein Baum gleicher Größe innerhalb von 20 Millisekunden generiert werden - das entspricht einer Geschwindigkeitssteigerung um mehr als das 3'000-fache! Allerdings war dieser Algorithmus nicht Teil der Standardbibliothek von \CC - er musste von uns implementiert werden.
+
+Trotz diesen Optimierungen dauerten die Messungen für jeden der Suchalgorithmen mehr als 45 Minuten - insgesamt haben die Rechnungen mehr als 4 Stunden CPU-Zeit beansprucht. Trotzdem sind wir mit dem Projekt sehr zufrieden, da die Ergebnisse sehr gut den Theoriewerten entsprechen.
+
+Der Quellcode für das Programm ist ist öffentlich, Open-Source und kann unter \href{https://github.com/Kepler-69c/binaryTree}{diesem Web-Link} aufgerufen werden.
 
 \pagebreak
 \bibliographystyle{apacite}
