@@ -56,7 +56,10 @@ In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-
 \end{abstract}
 \selectlanguage{ngerman}
 \pagebreak
-\tableofcontents
+{%https://tex.stackexchange.com/a/306617
+  \hypersetup{hidelinks}
+  \tableofcontents
+}
 \pagebreak
 
 %TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
@@ -221,19 +224,21 @@ Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des 
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/BFS_size.pdf}
 		\caption{Die Laufzeit der Breitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:bfs_time}
 	\end{figure}
 	
-Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein: Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
+Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abblidung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
 \subsection{Tiefensuche}
 
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/DFS_size.pdf}
 		\caption{Die Laufzeit der Treitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:dfs_time}
 	\end{figure}
 	%TODO: kaufzeit zu laufzeit umschreiben
 	
-Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt. Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
+Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abblidung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
 
 \subsection{Monte-Carlo Baumsuche}
 

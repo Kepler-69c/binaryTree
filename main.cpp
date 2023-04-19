@@ -2,6 +2,7 @@
 #include<list>
 #include "src/BinarySearchTree.h"
 #include "src/treeSearch.h"
+#include "src/MCTS.h"
 
 using namespace std;
 using namespace BinarySearchTree;
@@ -80,7 +81,7 @@ void comparison(int depth, BST tree, node* root) {
 
 int main() {
     // comparison
-    int searchDepth = 4;
+    int searchDepth = 20;
     int n = 5000000;
 
     // repetition
@@ -101,7 +102,11 @@ int main() {
 
 //    comparison(searchDepth, tree, root_node);
 //    repetitionDepth(n, repeating, 1, tree, root_node);
-    repetitionSize(repeating, startNodes, growAddend);
+//    repetitionSize(repeating, startNodes, growAddend);
+
+    cout << "Starting MCTS" << endl;
+    double value = MCTS(tree, root_node, searchDepth);
+    cout << "Time taken: " << value << endl;
 
     return 0;
 }
