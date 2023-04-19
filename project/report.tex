@@ -213,7 +213,8 @@ Wenn der Baum ausbalanciert ist, beträgt die durchschnittliche Komplexität wie
 Die Monte-Carlo Baumsuche ist ein Algorithmus welcher auf der Monte-Carlo Methode basiert. Die Monte-Carlo Methode ist ein Verfahren welches mit einer grossen anzahl von Zufallsexperimenten welche basiert auf gegebenen Warscheinlichkeiten einen gesuchten Wert annähert.
 %Bild der Montecarlo methode
 Der Suchalgorithmus nutzt dieses Prinzip um zu entscheiden, welchen Pfad der algorithmus absucht. Genauer gesagt gibt es für jeden pfad eine Warscheinlichkeit die bestimmt wie hoch dei Chance ist, dass jene Pfad gewählt wird. Da die Monte-carlo Baumsuche wie eine modifizierte Tifensuche ist, wird immer bis zum ende des Baumes oder bis zur vorgegebenen Tiefe gesucht. Wenn der Algorithmus auf seinem Weg nicht den Gesuchten Wert findet, startet er seine Suche bei der niedrigsten Tiefe bei der noch nicht alle Wege analysiert wurden. 
-Die Komplexität des Algorithmus ist $O(nI)$ um alle Knoten zu durchlaufen. 
+Die Komplexität des Algorithmus ist $O(nI)$ um alle Knoten zu durchlaufen. I ist dabei das Produckt aller Gegenwarscheinlichkeiten die eintreffen müssten um zu diesem Ort zu gelangen ist. Bei einem ausbalanciertem Baum ist dabei die Komplexität $O(nI/2)$ da wir keine gegebene Warscheinlichkeiten für den Baum haben und diese zufällig generiert werden. Wären jedoch die Warscheinlichkeiten, dass ein Gesuchter Wert an einem bestimmten Ort wäre, hätte der Baum eine Warscheinlichkeit von $O(nI)$ wobei hier I kleiner ist und somit auch die Zeitkomplexität sinkt. 
+Um die Gesamtzeit zu berechnen, nutzt man die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)$$ O(m) ist dabei die Zeitkomplexität des Zufalsgenerators für den Algorithmus.
 \subsubsection{Berechnung der Komplexität}
 
 \section{Resultate}
