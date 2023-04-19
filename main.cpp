@@ -1,14 +1,16 @@
 #include <fstream>
+#include<list>
 #include "src/BinarySearchTree.h"
 #include "src/treeSearch.h"
 
 using namespace std;
 using namespace BinarySearchTree;
 
-void repetition(int nodes, int repetition, int startDepth, BST tree, node* root) {
+void repetitionDepth(int nodes, int repetition, int startDepth, BST tree, node* root) {
+//    https://stackoverflow.com/a/28840805
     ofstream csv;
-    csv.open ("example.csv");
-    csv << "Nodes: " << nodes << ", Search: DFS\n";
+    csv.open ("data.csv");
+    csv << "Nodes: " << nodes << ", Search: BFS\n";
 
     for (int j = startDepth; j < tree.depth()-1; ++j) {
         csv << "Depth " << j << ":," << j << ",";
@@ -24,6 +26,38 @@ void repetition(int nodes, int repetition, int startDepth, BST tree, node* root)
             csv << double(time1 - time0) / CLOCKS_PER_SEC << ",";
         }
         csv << "\n";
+    }
+    csv.close();
+}
+
+void repetitionSize(int repeating, int startNodes, int growth) {
+    ofstream csv;
+    csv.open ("data.csv");
+    csv << "StartNodes: " << startNodes << ", growth:" << growth << ", Search: DFS\n";
+
+//    for (int nodes = startNodes; nodes < 5000000; nodes = nodes * growFactor) { // 5 million is the max tree size for my pc
+    for (int nodes = startNodes; nodes < 5000001; nodes = nodes + growth) {
+        // create tree
+        BST tree(nodes);
+        node* root_node = tree.root().v;
+        tree.random(nodes, 1, nodes*2);
+        cout << "Node number: " << nodes << endl;
+
+        csv << "Size " << nodes << ":," << nodes << ",";
+        cout << "Size " << nodes << endl;
+
+        // repeat tree search n times
+        for (int i = 0; i < repeating; ++i) {
+            int searchValue = tree.getFromDepth(tree.depth());
+            cout << "Gesuchter Wert:    " << searchValue << endl;
+
+            clock_t time0 = clock();
+            search::DFS(root_node, searchValue);
+            clock_t time1 = clock();
+            csv << double(time1 - time0) / CLOCKS_PER_SEC << ",";
+        }
+        csv << "\n";
+        delete root_node;
     }
     csv.close();
 }
@@ -45,9 +79,16 @@ void comparison(int depth, BST tree, node* root) {
 }
 
 int main() {
-    int n = 1000000;
+    // comparison
     int searchDepth = 4;
-    int repeating = 10;
+    int n = 5000000;
+
+    // repetition
+    int repeating = 100;
+    int startNodes = 1000; //10
+    int growFactor = 10;
+    int growAddend = 100000;
+
     BST tree(n);
     node* root_node = tree.root().v;
 
@@ -59,7 +100,8 @@ int main() {
 //    search::printTree(root_node);
 
 //    comparison(searchDepth, tree, root_node);
-    repetition(n, repeating, 1, tree, root_node);
+//    repetitionDepth(n, repeating, 1, tree, root_node);
+    repetitionSize(repeating, startNodes, growAddend);
 
     return 0;
 }
