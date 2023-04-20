@@ -7,10 +7,14 @@
   },
   "ExpandedNodes": [
     "",
+    "\\.github",
     "\\.idea",
+    "\\cmake-build-debug",
     "\\out",
+    "\\out\\build",
+    "\\project",
     "\\src"
   ],
-  "SelectedNode": "\\src\\MCTS.cpp",
+  "SelectedNode": "\\project\\report.tex",
   "PreviewInSolutionExplorer": false
 }

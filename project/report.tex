@@ -3,6 +3,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage[english,ngerman]{babel}
@@ -54,7 +56,10 @@ In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-
 \end{abstract}
 \selectlanguage{ngerman}
 \pagebreak
-\tableofcontents
+{%https://tex.stackexchange.com/a/306617
+  \hypersetup{hidelinks}
+  \tableofcontents
+}
 \pagebreak
 
 %TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
@@ -68,18 +73,25 @@ Tree-Search-Algorithmen sind in der künstlichen Intelligenz weit verbreitet und
 
 
 \section{Theorie}
-\subsection{Suchbaum}
+\subsection{Baum}
 Suchbäume sind Datenstrukturen aus der Graphentheorie. Der Begriff 'Suchbaum' bezieht sich darauf, dass die Datenstruktur baumartig organisiert ist. Ein Baum besteht aus einer Wurzel, die den obersten Knoten (engl. nodes) darstellt, und einer Anzahl von Zweigen oder Kanten, die von der Wurzel zu den Blättern führen, die die Endpunkte des Baums darstellen. Jeder Knoten im Baum repräsentiert eine Entscheidung oder einen Zustand, und jeder Zweig repräsentiert eine Aktion, die von diesem Zustand aus ausgeführt werden kann.
 
 %TODO: package für anführungszeichen hinzufügen
 
 Ein Baum ist also ein zusammenhängender Graph, der keine geschlossenen Pfade enthält \cite{graphs}, d.h. der sich nur in eine Richtung von der Wurzel aus erstreckt.
 
+\subsubsection{binärer Baum}
+
+EIn binärer Baum ist eine besondere Art von Baum, bei dem jeder Knoten maximal zwei Kindknoten (engl. \emph{child nodes}) haben kann. Ein solcher Baum ermöglicht eine effizientere Suche, da Suchalgorithmen sich an der Baumstruktur orientieren können, um die Suche zu optimieren und dadurch schneller Ergebnisse zu liefern. 
+
+Ein binärer Baum kann ausgeglichen/balanciert, teilweise balanciert oder unbalanciert sein. Wenn er ausgeglichen ist, bedeutet dies, dass beide Teilbäume eines Knotens (links und rechts) immer gleich Tief sind, während bei unbalancierten Bäumen die Tiefe der Teilbäme sich beliebig unterschieden kann. Bei einem unbalancierten binären Baum kann zum Beispiel ein Teilbaum vollständig leer sein, während beim anderen alle Knoten sind. Ein teilweise balancierter Baum üerschreitet eine gewisse Tiefendifferenz der Teilbäme nicht.
+%TODO "/" zeichen entfernen, Zitieren?
+
 \subsubsection{binärer Suchbaum}
-Ein binärer Suchbaum sind eine besondere Art von Suchbaum, bei dem jeder Knoten maximal zwei Kindknoten (engl. child nodes) haben kann. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zu einem normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, dass jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum ist \cite{c2_algorithms}.
+Bei einem binärer Suchbaum kann jeder Knoten nur zwei Kindknoten haben. Ausserdem erfordert ein binärer Suchbaum, im Gegensatz zu einem normalen Suchbaum, eine bestimmte Anordnung der Knoten: Diese sind so angeordnet, dass jeder Knoten kleiner als alle Knoten im rechten Teilbaum ist, aber grösser als alle Knoten im linken Teilbaum ist \cite{c2_algorithms}.
 %TODO: letzten Satz besser formulieren / restliche Theorie ist im Plural geschrieben, hier auch ändern? -> nach oder vor Punkt Zitieren?
 
-Der Vorteil dieser speziellen Anordnung ist, dass man schnell einen Knoten im Baum finden kann. Auch ist das Einfügen und Löschen von Knoten aus dem Baum einfacher.
+Der Vorteil dieser speziellen Anordnung ist, dass man schnell einen Knoten im Baum finden kann, da mit jedem durchlaufenen Knoten der Suchraum, also der Bereich, in dem nach einem bestimmten Knoten gesucht wird, durch das Vergleichen von Schlüsselwerten immer weiter eingeschränkt und halbiert werden kann. Auch ist das Einfügen und Löschen von Knoten aus dem Baum einfacher. 
 
 \subsection{Tree-Search Algorithmus}
 Tree-Search-Algorithmen sind eine Art von Algorithmen, die zur Lösung von Suchproblemen verwendet werden. Sie sind nützlich, wenn aus einer grossen Anzahl von möglichen Optionen die passende gefunden werden muss.
@@ -99,17 +111,16 @@ Untersucht wurden verschiedene Tree-Search-Algorithmen, unter anderem die Tiefen
 %TODO: untersucht -> umformulieren, mathematisch berechnet -> umformulieren
 
 \subsection{Der Suchbaum}
-Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vorteil hat, leicht skalierbar zu sein. Auch ist die Tiefe des Baumes logarithmisch zu der Anzahl der Knoten, was die Regelung der Baumtiefe erleichtert. Da jeder Knoten zwei \emph{child}-Knoten enthält, ist die Tiefe $d$ eines binären Baumes mit $n$ Knoten
-$$d \approx \log_2(n)$$%\text{.}$$
-\cite{c2_algorithms}.
+Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vorteil hat, leicht skalierbar zu sein. Auch ist die Tiefe des Baumes logarithmisch zu der Anzahl der Knoten, was die Regelung der Baumtiefe erleichtert. Da jeder Knoten zwei \emph{child}-Knoten enthält, ist die Tiefe $d$ eines binären Baumes mit $n$ Knoten $$d \approx \log_2(n)$$ \cite{c2_algorithms}. %\text{.}
 %TODO: ist die automatische Tiefe ein Vorteil?
 %TODO: stimmt das Zitat?
 
 Der Baum wurde wie folgt umgesetzt: Der Baum besteht aus einzelnen Knoten, die aus einem \emph{struct}-Datentyp bestehen, der über Pointer auf die \emph{child}- und \emph{parent}-Knoten verweist.
 
-\lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinarySearchTree.h}
+\lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinaryTree.h}
 
-Der Vorteil einer solchen Struktur ist, dass einzelne Knoten leicht geändert werden können. Zusätzlich beschleunigt eine solche Implementierung den Aufruf der einzelnen Knoten, was die Gesamtlaufzeit des Programms verkürzt.
+Der Vorteil einer solchen Struktur ist, dass einzelne Knoten leicht geändert werden können. Zusätzlich beschleunigt eine solche Implementierung den Aufruf der einzelnen Knoten, was die Gesamtlaufzeit des Programms verkürzt. Messungen haben ergeben, dass bei dieser Umsetzung die Knoten etwa mit $$O(Knoten) \approx O(1)$$ aufgerufen werden können, daher wurde diese Komplexität für die folgenden Rechnungen benutzt.
+
 
 \subsection{Breitensuche}
 
@@ -144,6 +155,24 @@ Die schichtweise Suche sorgt dafür, dass Knoten in gleicher Entfernung vom Star
 
 \subsubsection{Berechnung der Komplexität}
 
+Die Komplexität der Breitensuche in einem binären Baum mit Tiefe $d$ und $n$ Knoten beträgt:
+
+\begin{align}
+\text{Komplexität} &= \sum_{i=0}^{d} \text{Laufzeit der Ebene } i \\
+&= \sum_{i=0}^{d} O(\text{Anzahl der Knoten in Ebene }i) \\
+&= O(\sum_{i=0}^{d} \text{Anzahl der Knoten in Ebene }i) \\
+&= O(\sum_{i=0}^{d} 2^1) \\
+&= O(2^d) \\
+&= O(n),
+\end{align}
+
+da die Breitensuche jeden Knoten höchstens einmal speichert. Der Speicherplatzbedarf für die \emph{Queue} beträgt also im schlechtesten Fall, wenn der gesuchte Wert in den tiefsten Blättern ist und alle anderen Knoten zuvor durchgegangen werden müssen $$O(n)$$, da die \emph{Queue} alle Knoten speichern muss, die besucht werden.Daher ist die Laufzeit der Breitensuche proportional zur Grösse des Baumes, also zur Anzahl Knoten.
+
+Die Tiefe des Baumes hat auch einen Einfluss auf die Laufzeit, da die Suche mehr Knoten besuchen muss, bevor die Blätter erreicht werden. Da in dieser Umsetzung die Aufrufzeit der Knoten unabhängig von der Tiefe $O(1)$ ist, bleibt die Laufzeit aber immer noch proportional zur Anzahl der Knoten.
+
+Dies wurde jedoch für einen unbalancierten Baum berechnet. Diese Komplexität gilt auch für ausbalancierte Bäume, doch da die Suche einen Knoten abbricht, sobald er gefunden wurde, ist die durchschnittliche Komplexität in einem ausbalancierten Baum kleiner, da weniger leere Knoten durchlaufen werden müssen. Dann der Durchschnitt $$O(\log_2(n)).$$
+%TODO: begründen
+
 \subsection{Tiefensuche}
 
 Die Tiefensuche (engl. Depth-First-Search, DFS) ist ein Tree-Search Algorithmus der einen Graphen in die Tiefe durchsucht, d.h. sie geht so weit wie möglich in einen Pfad, bevor sie sich umwendet und nach anderen Pfaden sucht (Abbildung \ref{fig:binary_tree_dfs}).
@@ -176,14 +205,72 @@ Der für das Projekt geschriebene Algorithmus verwendet eine \emph{stack}-Datens
 
 \subsubsection{Berechnung der Komplexität}
 
+Die Tiefensuche läuft alle Pfade des Baumes nacheinander in die Tiefe durch. Wenn der Baum nicht ausbalanciert ist, kann es passieren, dass ein Pfad von der Wurzel zu einem Blatt eine Länge von $n$ hat. Dann muss die Suche im schlechtesten Fall alle Knoten durchlaufen und hat damit ebenfalls eine Komplexität von $$O(n).$$
+
+Die Tiefe ändert auch bei der Tiefensuche die Komplexität nicht, da alle Knoten innerhalb von $O(n)$ aufgerufen werden können.
+
+Wenn der Baum ausbalanciert ist, beträgt die durchschnittliche Komplexität wie bei der Breitensuche $$O(\log_2(n)),$$ da in allen Teilbäumen gleich viele Knoten sind.
+%TODO: leicht kurz. besser begründen?
+
 \subsection{Monte-Carlo Baumsuche}
 
+<<<<<<< HEAD
 
+=======
+Die Monte-Carlo Baumsuche ist ein Algorithmus welcher auf der Monte-Carlo Methode basiert. Die Monte-Carlo Methode ist ein Verfahren welches mit einer grossen anzahl von Zufallsexperimenten welche basiert auf gegebenen Warscheinlichkeiten einen gesuchten Wert annähert.
+%Bild der Montecarlo methode
+Der Suchalgorithmus nutzt dieses Prinzip um zu entscheiden, welchen Pfad der algorithmus absucht. Genauer gesagt gibt es für jeden pfad eine Warscheinlichkeit die bestimmt wie hoch dei Chance ist, dass jene Pfad gewählt wird. Da die Monte-carlo Baumsuche wie eine modifizierte Tiefensuche ist, wird immer bis zum ende des Baumes oder bis zur vorgegebenen Tiefe gesucht. Wenn der Algorithmus auf seinem Weg nicht den Gesuchten Wert findet, startet er seine Suche bei der niedrigsten Tiefe bei der noch nicht alle Wege analysiert wurden. 
+Der zuvor abgesuchte Pfad wird dabei gelöscht damit dieser nicht doppelt abgesucht werden kann. Dies erfolgt über die std::async Funktion welche diesen Prozess auf einen anderen Teil der CPU verlagert und somit Leistungseinbussen bei der Suche vermieden werden. 
+
+\subsubsection{Berechnung der Komplexität}
+
+Die Komplexität des Algorithmus im Worst case ist weie schon in den anderen Suchalgorithmen $O(n)$ um alle Knoten zu durchlaufen. Bei einem ausbalanciertem Baum ist dabei die Durchschnittskomplexität $O(nI+1)$ wobei I das Produkt aus allen Gegenwahrscheinlichkeiten des Falles, dass der richtige Pfad zum gesuchten Wert eingeschlagen wird, ist. Da wir in diesem Projekt keine gegebene Warscheinlichkeiten für den Baum haben und diese zufällig generiert werden, ist die eigentliche Komplexität für einen ausbalancierten Baum $O(n/2+1)$. 
+Um die Gesamtzeit zu berechnen, nutzt man die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)$$ O(m) ist dabei die Zeitkomplexität des Zufalsgenerators für den Algorithmus und k die Tiefe des Baumes.
+>>>>>>> f019d9ecae08978c7f15fc110180efe9059a6824
 
 \section{Resultate}
-Der Quellcode für das Programm ist 
+Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des Baumes und der Grösse des Baumes gemessen. Bei der Tiefe wurde ein Baum mit $5'000'000$ Knoten benutzt, bei der Grösse Bäume zwischen $1'000$ und $5'000'000$ Knoten. Alle Messungen wurden $100$ Mal durchgeführt, um allfällige Fehler auszugleichen, angezeigt wird jeweils der Durchschnitt der Messungen. Eine grössere Anzahl an Knoten oder Messungen war wegen der begrenzten Rechenleistung der benutzten Geräte nicht möglich; selbst die folgenden Messungen haben jeweils mehr als 45 Minuten gebraucht.
+
+\subsection{Breitensuche}
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.85\linewidth]{img/BFS_size.pdf}
+		\caption{Die Laufzeit der Breitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:bfs_time}
+	\end{figure}
+	
+Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abblidung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
+\subsection{Tiefensuche}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.85\linewidth]{img/DFS_size.pdf}
+		\caption{Die Laufzeit der Treitensuche, abhängig von der Anzahl Knoten}
+		\label{fig:dfs_time}
+	\end{figure}
+	%TODO: kaufzeit zu laufzeit umschreiben
+	
+Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abblidung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
+
+\subsection{Monte-Carlo Baumsuche}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.85\linewidth]{img/MCTS_size.pdf}
+		\caption{Die Laufzeit der Monte-Carlo Baumsuche, abhängig von der Anzahl Knoten}
+		\label{fig:mcts_time}
+	\end{figure}
+
+
 \section{Schlussfolgerung}
 \section{Reflexion}
+Das Projekt, vor allem das Schreiben des Programms war ziemlich ansprochsvoll, ging aber gut. Eines der grössten Probleme war die Effizienz des Baumes. Der Code musste mehrmals umgeschrieben werden, um eine schnelle Aufrufezeit der einzelnen Knoten zu ermöglichen.
+
+Als Schwierigkeit gestaltete sich auch das Generieren von Zufallszahlen, die man für die Knotenwerte und das Einfügen der Knoten in den Baum braucht. Zuerst verwendeten wir den Mersenne-Twister Pseudo-Zufallsgenerator, doch dieser war ausserordentlich langsam: um einen Baum mit 100'000 Knoten zu generieren brauchte es über 65 Sekunden. Durch den Einsatz des Xorshift128+ Pseudo-Zufallsgenerators konnte ein Baum gleicher Größe innerhalb von 20 Millisekunden generiert werden - das entspricht einer Geschwindigkeitssteigerung um mehr als das 3'000-fache! Allerdings war dieser Algorithmus nicht Teil der Standardbibliothek von \CC - er musste von uns implementiert werden.
+
+Trotz diesen Optimierungen dauerten die Messungen für jeden der Suchalgorithmen mehr als 45 Minuten - insgesamt haben die Rechnungen mehr als 4 Stunden CPU-Zeit beansprucht. Trotzdem sind wir mit dem Projekt sehr zufrieden, da die Ergebnisse sehr gut den Theoriewerten entsprechen.
+
+Der Quellcode für das Programm ist ist öffentlich, Open-Source und kann unter \href{https://github.com/Kepler-69c/binaryTree}{diesem Web-Link} aufgerufen werden.
 
 \pagebreak
 \bibliographystyle{apacite}
