@@ -11,7 +11,7 @@ void repetitionDepth(int nodes, int repetition, int startDepth, BT tree, node* r
 //    https://stackoverflow.com/a/28840805
     ofstream csv;
     csv.open ("data.csv");
-    csv << "Nodes: " << nodes << ", Search: BFS\n";
+    csv << "Nodes: " << nodes << ", Search: MCTS\n";
 
     for (int j = startDepth; j < tree.depth()-1; ++j) {
         csv << "Depth " << j << ":," << j << ",";
@@ -22,7 +22,8 @@ void repetitionDepth(int nodes, int repetition, int startDepth, BT tree, node* r
             cout << "Gesuchter Wert:    " << searchValue << endl;
 
             clock_t time0 = clock();
-            search::BFS(root, searchValue);
+//            search::BFS(root, searchValue);
+            MCTS(tree, root, tree.depth(), searchValue);// why j+2?
             clock_t time1 = clock();
             csv << double(time1 - time0) / CLOCKS_PER_SEC << ",";
         }
@@ -34,7 +35,7 @@ void repetitionDepth(int nodes, int repetition, int startDepth, BT tree, node* r
 void repetitionSize(int repeating, int startNodes, int growth) {
     ofstream csv;
     csv.open ("data.csv");
-    csv << "StartNodes: " << startNodes << ", growth:" << growth << ", Search: DFS\n";
+    csv << "StartNodes: " << startNodes << ", growth:" << growth << ", Search: MCTS\n";
 
 //    for (int nodes = startNodes; nodes < 5000000; nodes = nodes * growFactor) { // 5 million is the max tree size for my pc
     for (int nodes = startNodes; nodes < 5000001; nodes = nodes + growth) {
@@ -53,7 +54,8 @@ void repetitionSize(int repeating, int startNodes, int growth) {
             cout << "Gesuchter Wert:    " << searchValue << endl;
 
             clock_t time0 = clock();
-            search::DFS(root_node, searchValue);
+//            search::DFS(root_node, searchValue);
+            MCTS(tree, root_node, tree.depth(), searchValue);
             clock_t time1 = clock();
             csv << double(time1 - time0) / CLOCKS_PER_SEC << ",";
         }
@@ -74,9 +76,13 @@ void comparison(int depth, BT tree, node* root) {
     // breadth-first search
     search::BFS(root, searchValue);
     clock_t time2 = clock();
+    // monte-carlo tree search
+    MCTS(tree, root, depth, searchValue);
+    clock_t time3 = clock();
 
     cout << "Time taken: (DFS)  " << double(time1 - time0) / CLOCKS_PER_SEC << " seconds" << endl;
     cout << "Time taken: (BFS)  " << double(time2 - time1) / CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "Time taken: (MCTS) " << double(time3 - time2) / CLOCKS_PER_SEC << " seconds" << endl;
 }
 
 int main() {
@@ -96,20 +102,15 @@ int main() {
     clock_t time0 = clock();
     tree.random(n, 1, n*2);
     clock_t time1 = clock();
-    int searchValue = tree.getFromDepth(searchDepth);
     cout << "Time taken: (Tree) " << double(time1 - time0) / CLOCKS_PER_SEC << " seconds" << endl;
     cout << "Maximum tree depth " << tree.depth() << endl;
 //    search::printTree(root_node);
 
 //    comparison(searchDepth, tree, root_node);
-//    repetitionDepth(n, repeating, 1, tree, root_node);
-//    repetitionSize(repeating, startNodes, growAddend);
 
-    cout << "Starting MCTS" << endl;
-    clock_t time2 = clock();
-    MCTS(tree, root_node, searchDepth, searchValue);
-    clock_t time3 = clock();
-    cout << "Time taken: " << double(time3 - time2) / CLOCKS_PER_SEC << endl;
+//
+//    repetitionDepth(n, repeating, 1, tree, root_node);
+    repetitionSize(repeating, startNodes, growAddend);
 
     return 0;
 }

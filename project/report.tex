@@ -117,7 +117,7 @@ Das Projekt wurde mit einem binären Suchbaum umgesetzt, da diese Baumart den Vo
 
 Der Baum wurde wie folgt umgesetzt: Der Baum besteht aus einzelnen Knoten, die aus einem \emph{struct}-Datentyp bestehen, der über Pointer auf die \emph{child}- und \emph{parent}-Knoten verweist.
 
-\lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinarySearchTree.h}
+\lstinputlisting[language=C++, firstline=16, lastline=23]{../src/BinaryTree.h}
 
 Der Vorteil einer solchen Struktur ist, dass einzelne Knoten leicht geändert werden können. Zusätzlich beschleunigt eine solche Implementierung den Aufruf der einzelnen Knoten, was die Gesamtlaufzeit des Programms verkürzt. Messungen haben ergeben, dass bei dieser Umsetzung die Knoten etwa mit $$O(Knoten) \approx O(1)$$ aufgerufen werden können, daher wurde diese Komplexität für die folgenden Rechnungen benutzt.
 
@@ -241,6 +241,13 @@ Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie 
 Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abblidung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
 
 \subsection{Monte-Carlo Baumsuche}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.85\linewidth]{img/MCTS_size.pdf}
+		\caption{Die Laufzeit der Monte-Carlo Baumsuche, abhängig von der Anzahl Knoten}
+		\label{fig:mcts_time}
+	\end{figure}
 
 \section{Schlussfolgerung}
 \section{Reflexion}
