@@ -119,9 +119,9 @@ Ein Baum ist also ein zusammenhängender Graph, der keine geschlossenen Pfade en
 
 \subsubsection{binärer Baum}
 
-EIn binärer Baum ist eine besondere Art von Baum, bei dem jeder Knoten maximal zwei Kindknoten (engl. \emph{child nodes}) haben kann. Ein solcher Baum ermöglicht eine effizientere Suche, da Suchalgorithmen sich an der Baumstruktur orientieren können, um die Suche zu optimieren und dadurch schneller Ergebnisse zu liefern. 
+Ein binärer Baum ist eine besondere Art von Baum, bei dem jeder Knoten maximal zwei Kindknoten (engl. \emph{child nodes}) haben kann. Ein solcher Baum ermöglicht eine effizientere Suche, da Suchalgorithmen sich an der Baumstruktur orientieren können, um die Suche zu optimieren und dadurch schneller Ergebnisse zu liefern. 
 
-Ein binärer Baum kann ausgeglichen (balanciert), teilweise balanciert oder unbalanciert sein. Wenn er ausgeglichen ist, bedeutet dies, dass beide Teilbäume eines Knotens (links und rechts) immer gleich Tief sind, während bei unbalancierten Bäumen die Tiefe der Teilbäme sich beliebig unterschieden kann. Bei einem unbalancierten binären Baum kann zum Beispiel ein Teilbaum vollständig leer sein, während beim anderen alle Knoten sind. Ein teilweise balancierter Baum üerschreitet eine gewisse Tiefendifferenz der Teilbäme nicht.
+Ein binärer Baum kann ausgeglichen (balanciert), teilweise balanciert oder unbalanciert sein. Wenn er ausgeglichen ist, bedeutet dies, dass beide Teilbäume eines Knotens (links und rechts) immer gleich Tief sind, während bei unbalancierten Bäumen die Tiefe der Teilbäme sich beliebig unterscheiden kann. Bei einem unbalancierten binären Baum kann zum Beispiel ein Teilbaum vollständig leer sein, während beim anderen alle Knoten sind. Ein teilweise balancierter Baum üerschreitet eine gewisse Tiefendifferenz der Teilbäume nicht.
 %TODO 1) "/" zeichen entfernen, 2) Zitieren? -> 1) Zitat nicht gefunden 2) ✓
 
 \subsubsection{binärer Suchbaum}
@@ -144,7 +144,7 @@ Das Durchsuchen eines Baumes nach einem gewünschten Zustand dauert nicht immer 
 Die Komplexität von Tree-Search-Algorithmen wird in der sogenannten $O$-Notation ausgedrückt, die angibt, wie schnell die Laufzeit eines Suchalgorithmus mit der Grösse eines Baumes wächst. Eine Komplexität von $O(n)$ bedeutet beispielsweise, dass die Laufzeit eines Algorithmus linear von der Anzahl der Knoten $n$ abhängt.
 
 \section{Algorithmen im Vergleich}
-Untersucht wurden verschiedene Tree-Search-Algorithmen, unter anderem die Tiefensuche (engl. depth-first search, DFS), die Breitensuche (engl. breadth-first search, BFS) und die Monte-Carlo-Baumsuche (engl. Monte Carlo tree search, MCTS). Die Komplexität wurde zunächst für jeden Suchalgorithmus berechnet und anschliessend mit dem Programm in Bezug auf die Anzahl der Baumknoten und die Tiefe, in der das Ergebins lag, überprüft.
+Untersucht wurden verschiedene Tree-Search-Algorithmen, unter anderem die Tiefensuche (engl. depth-first search, DFS), die Breitensuche (engl. breadth-first search, BFS) und die Monte-Carlo-Baumsuche (engl. Monte Carlo tree search, MCTS). Die Komplexität wurde zunächst für jeden Suchalgorithmus berechnet und anschliessend mit dem Programm in Bezug auf die Anzahl der Baumknoten und die Tiefe, in der das Ergebnis lag, überprüft.
 %TODO: untersucht -> umformulieren, mathematisch berechnet -> umformulieren -> neom
 
 \subsection{Der Suchbaum}
@@ -203,7 +203,7 @@ Die Komplexität der Breitensuche in einem binären Baum mit Tiefe $d$ und $n$ K
 &= O(n),
 \end{align}
 
-da die Breitensuche jeden Knoten höchstens einmal speichert. Der Speicherplatzbedarf für die \emph{Queue} beträgt also im schlechtesten Fall, wenn der gesuchte Wert in den tiefsten Blättern ist und alle anderen Knoten zuvor durchgegangen werden müssen $$O(n)$$, da die \emph{Queue} alle Knoten speichern muss, die besucht werden.Daher ist die Laufzeit der Breitensuche proportional zur Grösse des Baumes, also zur Anzahl Knoten.
+da die Breitensuche jeden Knoten höchstens einmal speichert. Der Speicherplatzbedarf für die \emph{Queue} beträgt also im schlechtesten Fall, wenn der gesuchte Wert in den tiefsten Blättern ist und alle anderen Knoten zuvor durchgegangen werden müssen $$O(n)$$, da die \emph{Queue} alle Knoten speichern muss, die besucht werden. Daher ist die Laufzeit der Breitensuche proportional zur Grösse des Baumes, also zur Anzahl Knoten.
 
 Die Tiefe des Baumes hat auch einen Einfluss auf die Laufzeit, da die Suche mehr Knoten besuchen muss, bevor die Blätter erreicht werden. Da in dieser Umsetzung die Aufrufzeit der Knoten unabhängig von der Tiefe $O(1)$ ist, bleibt die Laufzeit aber immer noch proportional zur Anzahl der Knoten.
 
@@ -284,18 +284,18 @@ Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des 
 		\label{fig:bfs_time}
 	\end{figure}
 	
-Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abblidung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
+Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abbildung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
 \subsection{Tiefensuche}
 
 	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/DFS_size.pdf}
-		\caption{Die Laufzeit der Treitensuche, abhängig von der Anzahl Knoten}
+		\caption{Die Laufzeit der Breitensuche, abhängig von der Anzahl Knoten}
 		\label{fig:dfs_time}
 	\end{figure}
 	%TODO: kaufzeit zu laufzeit umschreiben
 	
-Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abblidung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
+Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie überein, da die Laufzeit linear von der Kontenzahl $n$ abhängt (Abbildung \ref{fig:dfs_time}). Die grösseren Abweichungen die unterschiedliche Balancierungen der Bäume als Ursache: Aus Zeitgründen wurde für jede Knotenzahl nur ein Baum generiert, in dem $100$ Mal unterschiedliche Werte gesucht wurden. Falls ein Baum sehr unbalanciert ist, dauern alle $100$ Suchen durchschnittlich länger. Diese Unbalancierung ist bei grösseren Bäumen besser sichtbar als bei kleinen.
 
 \subsection{Monte-Carlo Baumsuche}
 
