@@ -263,20 +263,21 @@ Der Algorithmus wird verständlicher, wenn man den Code anschaut (nur Hauptfunkt
 
 \subsubsection{Berechnung der Komplexität}
 
-Die Komplexität des Algorithmus im ungünstigsten Fall ist wie bei den anderen Suchalgorithmen $O(n)$, um alle Knoten zu durchlaufen. Dies ist möglich weil überflüssige Nodes gelöscht werden. Für einen ausgeglichenen Baum ist die durchschnittliche Komplexität $O(nI+1)$, wobei I das Produkt aller Gegenwahrscheinlichkeiten ist, dass der richtige Weg zum gesuchten Wert eingeschlagen wird. Da wir in diesem Projekt keine vorgegebenen Wahrscheinlichkeiten für den Baum haben und diese zufällig generiert werden, ist die tatsächliche Komplexität für einen ausgeglichenen Baum $O(n/2+1)$. 
-Um die Gesamtzeit zu berechnen, verwendet man die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)*I*\sum_{k=0}^{n} s^k$$ O(m) ist die Zeitkomplexität des Zufallsgenerators für den Algorithmus und k ist die Tiefe des Baumes. Diese resutiert aus folgender Überlegung.
+Die Komplexität des Algorithmus beträgt wie bei den anderen Suchalgorithmen im ungünstigsten Fall $O(n)$, um alle Knoten zu durchlaufen. Dies ist möglich, weil überflüssige Knoten gelöscht werden. Für einen ausgewogenen Baum ist die durchschnittliche Komplexität $O(nI+1)$, wobei I das Produkt aller Gegenwahrscheinlichkeiten ist, dass der richtige Weg zum gesuchten Wert eingeschlagen wird. Da wir in diesem Projekt keine vorgegebenen Wahrscheinlichkeiten für den Baum haben und diese zufällig generiert werden, ist die tatsächliche Komplexität für einen balancierten Baum $O(n/2+1)$. 
+Um die Gesamtzeit zu berechnen, verwenden wir die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)*I*\sum_{k=0}^{n} s^k,$$ wobei O(m) die Zeitkomplexität des Zufallsgenerators für den Algorithmus und k die Tiefe des Baumes ist. Dies ergibt sich aus folgender Überlegung:
 \begin{align}
-  \text{Benötigte Zeit} &= O(n) \text{Zeit pro Knoten }  \\
-  &= \sum_{i=0}^{d} O(\text{Zeit alle Knoten zu durchlaufen}) \\
-  &= \sum_{k=0}^{n} s^k*I*k \text{Zeit einen bestimmten Wer zu finden} \\
-  &= \sum_{i=0}^{d}*I*k+O(m)*I*\sum_{k=0}^{n} s^k \text{Wir addieren die Yeit die es benötigt eine node zu selektieren}\\
-  \end{align}
+  \text{Komplexität} &= O(n) \hspace{1pt} \text{Zeit pro Knoten }  \\
+  &= \sum_{i=0}^{d} O \hspace{1pt} (\text{Zeit alle Knoten zu durchlaufen}) \\
+  &= \sum_{k=0}^{n} s^k*I*k \hspace{1pt} \text{Zeit einen bestimmten Weg zu finden} \\
+  &= \sum_{i=0}^{d}*I*k+O(m)*I*\sum_{k=0}^{n} s^k,
+\end{align}
+wobei in (10) $O(m)*I*\sum_{k=0}^{n} s^k$ die Zeit ist, die es braucht, um eine \emph{node} zu selektrieren.
 
 \section{Resultate}
 Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des Baumes und der Grösse des Baumes gemessen. Bei der Tiefe wurde ein Baum mit $5'000'000$ Knoten benutzt, bei der Grösse Bäume zwischen $1'000$ und $5'000'000$ Knoten. Alle Messungen wurden $100$ Mal durchgeführt, um allfällige Fehler auszugleichen, angezeigt wird jeweils der Durchschnitt der Messungen. Eine grössere Anzahl an Knoten oder Messungen war wegen der begrenzten Rechenleistung der benutzten Geräte nicht möglich; selbst die folgenden Messungen haben jeweils mehr als 45 Minuten gebraucht.
 
 \subsection{Breitensuche}
-	\begin{figure}[ht]
+	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/BFS_size.pdf}
 		\caption{Die Laufzeit der Breitensuche, abhängig von der Anzahl Knoten}
@@ -286,7 +287,7 @@ Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des 
 Die gemessenen Laufzeiten der Breitensuche stimmen ziemlich gut mit der Theorie überein (Abblidung \ref{fig:bfs_time}): Die Laufzeit steigt linear mit der Anzahl der Knoten, da die gemessenen Bäume jeweils teilweise balanciert sind. Die Ursache der Abweichungen ist die unterschiedliche Balancierung der Bäume.
 \subsection{Tiefensuche}
 
-	\begin{figure}[ht]
+	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/DFS_size.pdf}
 		\caption{Die Laufzeit der Treitensuche, abhängig von der Anzahl Knoten}
@@ -298,18 +299,18 @@ Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie über
 
 \subsection{Monte-Carlo Baumsuche}
 
-	\begin{figure}[ht]
+	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=0.85\linewidth]{img/MCTS_size.pdf}
 		\caption{Die Laufzeit der Monte-Carlo Baumsuche, abhängig von der Anzahl Knoten}
 		\label{fig:mcts_time}
 	\end{figure}
-Bei der Monte-Carlo Baumsuche, stimmen die Daten nur teilweise mit der Theorie überein. Zum einen Passt die von Excel erstellte Fitfunktion nicht genau zu den Berechnungen welche eine Fitfunktion von $O(n/I) = 1/2*O(n)$  vorraussagt. Auch auffällig ist ein starker abfall in der Berechnungszeit von den Nodeanzahlen 170'000 zu 180'000. Dieser ist resultat der zufallsbasierten Pfadentscheidungen des Algorithmus. Da nur eine kleine Menge an Daten aus Zeitgründen errechnet wurden ist dies kaum zu beheben. Die schlechtere Leistung des Algorithmus im Allgemeinen ist mit dem Fakt zu bgeründen, dass der Algorithmus incht für Binäre baume erstellt wurde sondern für Baume die sich viel spalten sogenannte N-Ary Trees und für Bäume bei denen die Warscheinlichkeiten durch beispielsweise ein Neuronales Netzwerk gegeben sind.
+Bei der Monte-Carlo Baumsuche stimmen die Daten nur teilweise mit der Theorie überein. Zum einen stimmt die von Excel erstellte Fitfunktion nicht genau mit den Berechnungen überein, welche eine Fitfunktion von $O(n/I) = 1/2*O(n)$ vorhersagen. Auffallend ist auch der starke Abfall der Rechenzeit von Knotenanzahl 170'000 auf 180'000. Dieser ist auf die zufälligen Pfadentscheidungen des Algorithmus zurückzuführen. Da aus Zeitgründen nur eine relativ kleine Datenmenge berechnet wurde, ist dies kaum zu korrigieren. Die generell schlechtere Performance des Algorithmus ist darauf zurückzuführen, dass der Algorithmus nicht für Binärbäume, sondern für Bäume mit vielen Spaltungen, sogenannte N-Ary Trees, und für Bäume, bei denen die Wahrscheinlichkeiten z.B. durch ein neuronales Netz gegeben sind, erstellt wurde.
 
 \section{Schlussfolgerung}
 Wir haben die Komplexität von verschiedenen Algorithmen im Bezug auf die Tiefe und Grösse eines binären Baumes untersucht. Dazu haben wir die Komplexität der Algorithmen zuerst berechnet und danach für verschiedene Baumgrössen 100 Mal gemessen.
 
-Die Messungen haben ergeben, dass die Komplexität der drei Algorithmen verschieden sind und jder seine Vorteile hat. Die Monte-Carlo Baumsuche ist sehr gut wenn man kleine Baäume analysiert während tiefen und breitensuche stärker bei grösseren Baumen sind. Die Breiten und die Teifensuche sind auch nochmals unterschiedlich schnell je nach dem wo sich der gesuchte Wert befindet. Da die Werte in diesem Projekt jedoch zufällig platziert wurden, sind kaum geschwindigkeitsunterschiede festzustellen. 
+Die Messungen haben gezeigt, dass die Komplexität der drei Algorithmen unterschiedlich ist und jeder Algorithmus seine Vorteile hat. Die Monte-Carlo Baumsuche ist sehr gut bei der Analyse von kleinen Bäumen, während die Tiefen- und Breitensuche bei größeren Bäumen besser ist. Die Breiten- und Tiefensuche sind auch unterschiedlich schnell, je nachdem, wo sich der gesuchte Wert befindet. Da die Werte in diesem Projekt jedoch zufällig platziert wurden, sind die Geschwindigkeitsunterschiede sehr gering. 
 
 \section{Reflexion}
 Das Projekt, vor allem das Schreiben des Programms war ziemlich ansprochsvoll, ging aber gut. Eines der grössten Probleme war die Effizienz des Baumes. Der Code musste mehrmals umgeschrieben werden, um eine schnelle Aufrufezeit der einzelnen Knoten zu ermöglichen.
