@@ -42,25 +42,62 @@
 \newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}\hspace{.1em}}
 
 \title{Vergleich der Komplexität von \break Tree-Search-Algorithmen}
-\author{}
+\author{Fabian Stämpfli, Djordje Petrović}
 
 
 \begin{document}
 
-\maketitle
+\noindent% prevent the box to be shifted a bit to the right
+\makebox[\textwidth][r]{% create a box, with it's content aligned to the right
+  \begin{minipage}{.30\textwidth}% create a content half width
+    \emph{An:} \\
+    Christian Thalmann und\\
+    Anh Huy Truong\\
+    MNG Rämibühl \\
+    Rämistraße 58 \\
+    8001 Zürich
+  \end{minipage}
+}
+
+\vspace{8cm}
+
+\makebox[\textwidth][l]{% create a box, with it's content aligned to the right
+  \begin{minipage}{\textwidth}% create a content half width
+    {\huge\bfseries Vergleich der Komplexität von \par}
+    {\huge\bfseries Tree-Search-Algorithmen \par}
+    \normalsize
+    \bigskip
+    Bericht zum PU-Projekt\\
+    \smallskip
+    von Fabian Stämpfli und Djordje Petrović (4h)\\
+    \smallskip
+    Kantonsschule MNG Räibühl
+
+    \bigskip
+Zürich, 21.04.2023
+  \end{minipage}
+}
+
+
+
 \thispagestyle{empty}
 \pagebreak
 \selectlanguage{english}
+\thispagestyle{empty}
 \begin{abstract}
-In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-Algorithmen untersucht. Es werden verschiedene Algorithmen wie die Tiefensuche, Breitensuche und andere heuristische Suchalgorithmen auf binären Suchbäumen getestet. Dabei wird die Anzahl der durchsuchten Knoten und die benötigte Zeit gemessen, um die Effizienz der Algorithmen zu vergleichen. Das Ziel ist es, die Komplexität der Suchalgorithmen zu berechnen, um diese dadurch zu vergleichen.
+In diesem Projekt wird die Komplexität von verschiedenen einfachen Tree-Search-Algorithmen untersucht. Es werden die Tiefensuche, Breitensuche und Monte-Carlo Baumsuche auf binären Suchbäumen getestet. Dabei wird die Anzahl der durchsuchten Knoten und die benötigte Zeit gemessen, um die Effizienz der Algorithmen zu vergleichen. Das Ziel ist es, die Komplexität der Suchalgorithmen zu berechnen, um diese dadurch zu vergleichen.
 \end{abstract}
 \selectlanguage{ngerman}
 \pagebreak
+\thispagestyle{empty}
 {%https://tex.stackexchange.com/a/306617
   \hypersetup{hidelinks}
   \tableofcontents
 }
 \pagebreak
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 %TODO: aus der Sicht einer 3. Person / Passiv schreiben!!
 %TODO: alle begriffe, die oft vorkommen, gleich schreiben: z.B. Tree-Search Algorithmus (angang immer gross, verbunden)
@@ -214,19 +251,20 @@ Wenn der Baum ausbalanciert ist, beträgt die durchschnittliche Komplexität wie
 
 \subsection{Monte-Carlo Baumsuche}
 
-<<<<<<< HEAD
+Die Monte-Carlo Baumsuche ist ein Algorithmus, der verwendet wird, um den besten Pfad in einem Baum von Entscheidungen zu finden. Die Methode basiert auf der Monte-Carlo Methode, die eine große Anzahl von Zufallsexperimenten verwendet, um einen Wert anzunähern. In diesem Fall wird die Methode verwendet, um die Wahrscheinlichkeiten zu bestimmen, mit denen jeder Pfad im Baum durchsucht wird.
 
-=======
-Die Monte-Carlo Baumsuche ist ein Algorithmus welcher auf der Monte-Carlo Methode basiert. Die Monte-Carlo Methode ist ein Verfahren welches mit einer grossen anzahl von Zufallsexperimenten welche basiert auf gegebenen Warscheinlichkeiten einen gesuchten Wert annähert.
-%Bild der Montecarlo methode
-Der Suchalgorithmus nutzt dieses Prinzip um zu entscheiden, welchen Pfad der algorithmus absucht. Genauer gesagt gibt es für jeden pfad eine Warscheinlichkeit die bestimmt wie hoch dei Chance ist, dass jene Pfad gewählt wird. Da die Monte-carlo Baumsuche wie eine modifizierte Tiefensuche ist, wird immer bis zum ende des Baumes oder bis zur vorgegebenen Tiefe gesucht. Wenn der Algorithmus auf seinem Weg nicht den Gesuchten Wert findet, startet er seine Suche bei der niedrigsten Tiefe bei der noch nicht alle Wege analysiert wurden. 
-Der zuvor abgesuchte Pfad wird dabei gelöscht damit dieser nicht doppelt abgesucht werden kann. Dies erfolgt über die std::async Funktion welche diesen Prozess auf einen anderen Teil der CPU verlagert und somit Leistungseinbussen bei der Suche vermieden werden. 
+Der Algorithmus sucht den Baum von der Wurzel aus, indem er die Wahrscheinlichkeiten jedes Pfades nutzt, um zu entscheiden, welchen Pfad er zuerst durchsuchen soll. Wenn er den gewünschten Wert nicht auf diesem Pfad findet, setzt er seine Suche bei einem anderen Pfad fort. Der Algorithmus arbeitet dabei ähnlich wie eine Tiefensuche, indem er immer bis zum Ende des Baums oder bis zur vorgegebenen Tiefe sucht.
+
+Wenn der Algorithmus keinen passenden Pfad findet, beginnt er seine Suche bei der niedrigsten Tiefe, bei der noch nicht alle Pfade durchsucht wurden. Um die Leistung zu optimieren löscht der für das Projekt geschriebene Algorithmus den zuvor gesuchten Pfad indem er die Suche mit der Funktion \emph{std::async} Funktion.
+
+Der Algorithmus wird verständlicher, wenn man den Code anschaut (nur Hauptfunktion, vereinfacht, ohne Multithreading): 
+
+\lstinputlisting[language=C++, firstline=62, lastline=78]{../src/MCTS.cpp}
 
 \subsubsection{Berechnung der Komplexität}
 
-Die Komplexität des Algorithmus im Worst case ist weie schon in den anderen Suchalgorithmen $O(n)$ um alle Knoten zu durchlaufen. Bei einem ausbalanciertem Baum ist dabei die Durchschnittskomplexität $O(nI+1)$ wobei I das Produkt aus allen Gegenwahrscheinlichkeiten des Falles, dass der richtige Pfad zum gesuchten Wert eingeschlagen wird, ist. Da wir in diesem Projekt keine gegebene Warscheinlichkeiten für den Baum haben und diese zufällig generiert werden, ist die eigentliche Komplexität für einen ausbalancierten Baum $O(n/2+1)$. 
-Um die Gesamtzeit zu berechnen, nutzt man die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)$$ O(m) ist dabei die Zeitkomplexität des Zufalsgenerators für den Algorithmus und k die Tiefe des Baumes.
->>>>>>> f019d9ecae08978c7f15fc110180efe9059a6824
+Die Komplexität des Algorithmus im ungünstigsten Fall ist wie bei den anderen Suchalgorithmen $O(n)$, um alle Knoten zu durchlaufen. Für einen ausgeglichenen Baum ist die durchschnittliche Komplexität $O(nI+1)$, wobei I das Produkt aller Gegenwahrscheinlichkeiten ist, dass der richtige Weg zum gesuchten Wert eingeschlagen wird. Da wir in diesem Projekt keine vorgegebenen Wahrscheinlichkeiten für den Baum haben und diese zufällig generiert werden, ist die tatsächliche Komplexität für einen ausgeglichenen Baum $O(n/2+1)$. 
+Um die Gesamtzeit zu berechnen, verwendet man die Formel $$ t(n,l,d) = I*n*(\sum_{k=0}^{n} s^k) + O(m)$$ O(m) ist die Zeitkomplexität des Zufallsgenerators für den Algorithmus und k ist die Tiefe des Baumes.
 
 \section{Resultate}
 Bei allen Suchalgorithmen wurde die Laufzeit in Abhängigkeit von der Tiefe des Baumes und der Grösse des Baumes gemessen. Bei der Tiefe wurde ein Baum mit $5'000'000$ Knoten benutzt, bei der Grösse Bäume zwischen $1'000$ und $5'000'000$ Knoten. Alle Messungen wurden $100$ Mal durchgeführt, um allfällige Fehler auszugleichen, angezeigt wird jeweils der Durchschnitt der Messungen. Eine grössere Anzahl an Knoten oder Messungen war wegen der begrenzten Rechenleistung der benutzten Geräte nicht möglich; selbst die folgenden Messungen haben jeweils mehr als 45 Minuten gebraucht.
@@ -263,6 +301,10 @@ Die gemessenen Laufzeiten der Tiefensuche stimmen sehr gut mit der Theorie über
 Bei der Monte-Carlo Baumsuche, stimmen die Daten nur teilweise mit der Theorie überein. Zum einen Passt die von Excel erstellte Fitfunktion nicht genau zu den Berechnungen welche eine Fitfunktion von $O(n/I) = 1/2*O(n)$  vorraussagt. Auch auffällig ist ein starker abfall in der Berechnungszeit von den Nodeanzahlen 170'000 zu 180'000. Dieser ist resultat der zufallsbasierten Pfadentscheidungen des Algorithmus. Da nur eine kleine Menge an Daten aus Zeitgründen errechnet wurden ist dies kaum zu beheben.  
 
 \section{Schlussfolgerung}
+Wir haben die Komplexität von verschiedenen Algorithmen im Bezug auf die Tiefe und Grösse eines binären Baumes untersucht. Dazu haben wir die Komplexität der Algorithmen zuerst berechnet und danach für verschiedene Baumgrössen 100 Mal gemessen.
+
+Die Messungen haben ergeben, dass die Komplexität
+
 \section{Reflexion}
 Das Projekt, vor allem das Schreiben des Programms war ziemlich ansprochsvoll, ging aber gut. Eines der grössten Probleme war die Effizienz des Baumes. Der Code musste mehrmals umgeschrieben werden, um eine schnelle Aufrufezeit der einzelnen Knoten zu ermöglichen.
 

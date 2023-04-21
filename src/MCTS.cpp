@@ -41,22 +41,40 @@ void deletion(node* Nodeptr) {
     }
 }
 
+//int nodetest(node* Parent, int Value, int MaxDepth, int Depth) {
+//    BT::Position PositionInhit;
+//    node* selectedChild = nullptr;
+//    if (Parent->left == nullptr) { selectedChild = Parent->right; }
+//    else if (Parent->right == nullptr) { selectedChild = Parent->left; }
+//    else { selectedChild = accessNext(Parent); }
+//    PositionInhit.v = selectedChild;
+//    bool Is_external = PositionInhit.isExternal();
+//    if (selectedChild->data == Value)
+//        return selectedChild->data;
+//    else if (Is_external || Depth == MaxDepth)
+//        return -1;
+//    else {
+//        Depth++;
+//        return nodetest(selectedChild, Value, MaxDepth, Depth);
+//    }
+//}
+
 int nodetest(node* Parent, int Value, int MaxDepth, int Depth) {
+    // Position im Baum initialisieren, zufaelliges Kind initialisieren
     BT::Position PositionInhit;
     node* selectedChild = nullptr;
-    if (Parent->left == nullptr) { selectedChild = Parent->right; }
-    else if (Parent->right == nullptr) { selectedChild = Parent->left; }
-    else { selectedChild = accessNext(Parent); }
+    // linkes/rechtes zufaellig Kind waehlen, falls es vorhanden ist.
+    if (Parent->left == nullptr)        selectedChild = Parent->right;
+    else if (Parent->right == nullptr)  selectedChild = Parent->left;
+    else                                selectedChild = accessNext(Parent);
+    // Position im Baum aktualisieren
     PositionInhit.v = selectedChild;
+    // Pruefen, ob das ausgewaehlte Kind ein Blatt ist
     bool Is_external = PositionInhit.isExternal();
-    if (selectedChild->data == Value)
-        return selectedChild->data;
-    else if (Is_external || Depth == MaxDepth)
-        return -1;
-    else {
-        Depth++;
-        return nodetest(selectedChild, Value, MaxDepth, Depth);
-    }
+    // Ist der gesuchte Wert im Kind gefunden worden (success), ein externer Knoten oder in der maximalen Tiefe (-1)?
+    if (selectedChild->data == Value)               return selectedChild->data;
+    else if (Is_external || Depth == MaxDepth)      return -1;
+    else                                            return nodetest(selectedChild, Value, MaxDepth, Depth++);
 }
 
 void MCTS(BT tree, node* root_node, int maxDepth, int searchValue) {
@@ -65,4 +83,3 @@ void MCTS(BT tree, node* root_node, int maxDepth, int searchValue) {
         result = nodetest(root_node,searchValue,maxDepth,0);
     }
 }
-
